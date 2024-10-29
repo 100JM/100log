@@ -42,6 +42,7 @@ const PostPagination: React.FC = () => {
                             href="#"
                             isActive={currentPage === page}
                             onClick={() => handlePageChange(page)}
+                            className="page-link"
                         >
                             {page}
                         </PaginationLink>
