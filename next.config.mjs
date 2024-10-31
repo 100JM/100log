@@ -1,6 +1,7 @@
 // next.config.mjs
 import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';  // GitHub Flavored Markdown 지원 (선택사항)
+import rehypeRaw from 'rehype-raw';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,20 +16,22 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'velog.io',
             },
+            {
+                protocol: 'https',
+                hostname: 'velog.velcdn.com',  // 이미지 도메인 추가
+            }
         ],
     },
     // 추가할 부분
     experimental: {
         mdxRs: true
     },
-    // 빌드 시 output 설정 추가
-    output: 'standalone',
 };
 
 const withMDX = createMDX({
     options: {
         remarkPlugins: [remarkGfm],  // 선택사항
-        rehypePlugins: [],           // 필요한 rehype 플러그인 추가 가능
+        rehypePlugins: [rehypeRaw],           // 필요한 rehype 플러그인 추가 가능
     },
 });
 
