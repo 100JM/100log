@@ -1,8 +1,13 @@
-'use client';
+// 'use client';
+
+import { getAllPosts } from "../utils/mdx";
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-const PostList: React.FC = () => {
+const PostList = async () => {
+    const post = await getAllPosts();
+
+    console.log(post);
     return (
         <div className="w-[90%] grid gap-6 gap-y-10 mb-6 post-list">
             {Array.from({length: 10}, (_, index) => {

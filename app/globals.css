@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap");
+
 html,
 body {
   width: 100%;
@@ -20,6 +22,26 @@ body {
 
 .post-time {
   margin-right: 24px;
+}
+
+.text-info {
+  color: #3182ce;
+  padding: 12px;
+  background-color: #e5f5fd;
+}
+
+.post-contents>p {
+  font-size: 16px;
+  margin-top: 16px;
+  line-height: 2;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.post-contents>h2 {
+  font-size: 32px;
+  margin: 50px 0;
 }
 
 @media screen and (min-width: 960px) {

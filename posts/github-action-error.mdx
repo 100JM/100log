@@ -5,15 +5,25 @@ tags: ['github', 'error']
 ---
 
 ![](/images/github.jpeg)
+<br />
 
-깃허브에 TIL 작성을 시작하면서 액션을 통해 README를 자동으로 작성해주는 방법이 있다길래 사용 해보는 도중 push를 했을때 아래와 같은 오류를 만났다...   
+<h2>The requested URL returned error: 403</h2>
 
-![](https://velog.velcdn.com/images/100-100/post/f2a5488c-c703-4875-b424-3d5394e089db/image.png)   
+깃허브에 TIL 작성을 시작하면서 액션을 통해 README를 자동으로 작성해주는 방법이 있다길래 사용 해보는 도중 push를 했을때 아래와 같은 오류를 만났다.
 
-이리저리 검색해본 결과(권한, 토큰 문제 등) 여러 상황이 있는데 나같은 경우 Workflow 권한 문제였다.
+![](https://velog.velcdn.com/images/100-100/post/f2a5488c-c703-4875-b424-3d5394e089db/image.png)
+<br />
 
-참고 : https://stackoverflow.com/questions/73687176/permission-denied-to-github-actionsbot-the-requested-url-returned-error-403
+이리저리 검색해본 결과(권한, 토큰 문제 등) 여러 상황이 있는데 나같은 경우 Workflow 권한 문제였는데, **해당 레포지토리 - settings - actions(General) - Workflow permissions 부분** 에서 **Read and write** 로 권한을 설정해주니 해결되었다!
 
-해당 레포지토리 - settings - actions(General) - Workflow permissions 부분에서 Read and write로 권한을 설정해주니 해결되었다 !
+<br />
+
 ![](https://velog.velcdn.com/images/100-100/post/2b5d5595-4050-4216-bf2e-2d023952cd56/image.png)
+<br />
+
 ![](https://velog.velcdn.com/images/100-100/post/f5d2787f-a474-4895-867f-9ef7239ea2b7/image.png)
+<br/>
+
+<a href="https://stackoverflow.com/questions/73687176/permission-denied-to-github-actionsbot-the-requested-url-returned-error-403" target="_blank" rel="noopener noreferrer">
+    <p className="text-info">참고 - stackoverflow.com</p>
+</a>
