@@ -17,6 +17,12 @@ const nextConfig = {
             },
         ],
     },
+    // 추가할 부분
+    experimental: {
+        mdxRs: true
+    },
+    // 빌드 시 output 설정 추가
+    output: 'standalone',
 };
 
 const withMDX = createMDX({
