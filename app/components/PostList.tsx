@@ -1,6 +1,6 @@
 // 'use client';
 
-import { getAllPosts } from "../utils/mdx";
+// import { getAllPosts } from "../utils/mdx";
 
 import { Skeleton } from "@/components/ui/skeleton"
 
