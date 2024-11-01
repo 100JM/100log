@@ -21,6 +21,7 @@ export async function getAllPosts(): Promise<Post[]> {
                 slug: fileName.replace(/\.mdx$/, ''),
                 tags: data.tags,
                 content,
+                thumbnail: data.thumbnail
             };
         });
 
@@ -40,8 +41,34 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
             slug,
             tags: data.tags,
             content,
+            thumbnail: data.thumbnail
         };
     } catch {
         return null;
     }
 };
+
+export async function getLatestPost(): Promise<Post> {
+    const fileNames = fs.readdirSync(postsDirectory);
+    const posts = fileNames
+        .filter((fileName) => fileName.endsWith('.mdx'))
+        .map((fileName) => {
+            const fullPath = path.join(postsDirectory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const { data, content } = matter(fileContents);
+
+            return {
+                title: data.title,
+                description: data.description,
+                date: data.date,
+                slug: fileName.replace(/\.mdx$/, ''),
+                tags: data.tags,
+                content,
+                thumbnail: data.thumbnail
+            };
+        }).reduce((latestPost, post ) => {
+            return new Date(post.date).getTime() > new Date(latestPost.date).getTime() ? post : latestPost;
+        })
+
+    return posts;
+};    
