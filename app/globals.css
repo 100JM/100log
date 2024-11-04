@@ -44,6 +44,16 @@ body {
   margin: 50px 0;
 }
 
+.post-contents>h3 {
+  font-size: 28px;
+  margin: 30px 0;
+}
+
+.post-contents>h4 {
+  font-size: 20px;
+  margin: 20px 0;
+}
+
 @media screen and (min-width: 960px) {
   .post-list {
     grid-template-columns: repeat(2, 1fr);
@@ -129,6 +139,25 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  background-color: #f1f5f9;
+}
+
+code {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:not(pre) > code {
+  background-color: rgb(224, 224, 224);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
 }
 
 @layer base {

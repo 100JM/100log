@@ -2,6 +2,7 @@
 import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';  // GitHub Flavored Markdown 지원 (선택사항)
 import rehypeRaw from 'rehype-raw';
+import rehypePrettyCode from 'rehype-pretty-code';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -28,10 +29,15 @@ const nextConfig = {
     },
 };
 
+const options = {
+    theme: "github-light",
+};
+
 const withMDX = createMDX({
+    extension: /\.mdx?$/,
     options: {
-        remarkPlugins: [remarkGfm],  // 선택사항
-        rehypePlugins: [rehypeRaw],           // 필요한 rehype 플러그인 추가 가능
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeRaw, [rehypePrettyCode, options]],
     },
 });
 

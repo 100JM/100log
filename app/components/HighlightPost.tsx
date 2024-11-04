@@ -9,7 +9,6 @@ import 'remixicon/fonts/remixicon.css';
 const HighlightPost: React.FC = async () => {
     const latestPost = await getLatestPost();
 
-    console.log(latestPost);
     return (
         <div className="w-[90%] mb-16 flex flex-row gap-6 highlight-post">
             <Link
