@@ -22,10 +22,10 @@ const HighlightPost: React.FC = async () => {
                     </div>
                     <div className="h-[530px] rounded-xl w-full">
                         <div className="w-full h-3/4 relative">
-                            <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} />
+                            <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} className="rounded-[18px]" />
                         </div>
                         <div className="w-full h-1/4 flex flex-col justify-start">
-                            <div className="h-1/2 line-clamp-1">
+                            <div className="h-1/2 line-clamp-1 flex items-center">
                                 <Tags tags={undefined} date={latestPost.date} />
                             </div>
                             <div className="text-3xl h-1/2 line-clamp-2">{latestPost.title}</div>
