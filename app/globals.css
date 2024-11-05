@@ -24,6 +24,12 @@ body {
   margin-right: 24px;
 }
 
+.post-contents {
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .text-info {
   color: #3182ce;
   padding: 12px;
@@ -34,9 +40,6 @@ body {
   font-size: 16px;
   margin-top: 16px;
   line-height: 2;
-  font-family: "Nanum Gothic Coding", monospace;
-  font-weight: 400;
-  font-style: normal;
 }
 
 .post-contents>h2 {
@@ -52,6 +55,10 @@ body {
 .post-contents>h4 {
   font-size: 20px;
   margin: 20px 0;
+}
+
+.post-contents>blockquote {
+  color: rgb(100 116 139);
 }
 
 @media screen and (min-width: 960px) {
