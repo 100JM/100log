@@ -149,17 +149,6 @@ pre {
   background-color: #f1f5f9;
 }
 
-code {
-  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-:not(pre) > code {
-  background-color: rgb(224, 224, 224);
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-size: 0.9em;
-}
-
 @layer base {
   * {
     @apply border-border;

@@ -13,7 +13,7 @@ const HighlightPost: React.FC = async () => {
         <div className="w-[90%] mb-16 flex flex-row gap-6 highlight-post">
             <Link
                 href={`posts/${latestPost.slug}`}
-                className="h-[600px] w-full cursor-pointer hover:text-slate-500"
+                className="h-[600px] w-full cursor-pointer hover:text-slate-500 active:text-slate-500"
             >
                     <div className="text-4xl flex items-center justify-start py-2 h-[70px]">
                         <i className="ri-pushpin-2-line"></i>
@@ -23,11 +23,11 @@ const HighlightPost: React.FC = async () => {
                         <div className="w-full h-3/4 relative">
                             <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} className="rounded-[18px]" />
                         </div>
-                        <div className="w-full h-1/4 flex flex-col justify-start">
+                        <div className="w-full h-1/4">
                             <div className="h-1/2 line-clamp-1 flex items-center">
                                 <Tags tags={undefined} date={latestPost.date} />
                             </div>
-                            <div className="text-3xl h-1/2 line-clamp-2">{latestPost.title}</div>
+                            <h2 className="text-3xl line-clamp-2">{latestPost.title}</h2>
                         </div>
                     </div>
                 

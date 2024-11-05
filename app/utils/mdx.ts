@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Post } from '@/type/Post';
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+export const postsDirectory = path.join(process.cwd(), 'posts');
 
 export async function getAllPosts(): Promise<Post[]> {
     const fileNames = fs.readdirSync(postsDirectory);
@@ -71,4 +71,4 @@ export async function getLatestPost(): Promise<Post> {
         })
 
     return posts;
-};    
+};

@@ -7,6 +7,8 @@ import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 
+import 'prismjs/themes/prism-solarizedlight.css';
+
 const PostPage = async ({ params, }: { params: { slug: string }; }) => {
     const post = await getPostBySlug(params.slug);
 
