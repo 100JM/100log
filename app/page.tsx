@@ -3,6 +3,7 @@ import Contact from "./components/Contact";
 import PostList from "./components/PostList";
 import HighlightPost from "./components/HighlightPost";
 import PostPagination from "./components/PostPagination";
+import TagGroup from "./components/TagGroup";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
           <h5 className="text-2xl">Welcome to my blog👋</h5>
         </div>
         <HighlightPost />
+        <TagGroup />
         <PostList />
         <PostPagination />
         <Contact />

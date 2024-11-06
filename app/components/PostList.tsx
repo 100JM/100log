@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import usePost from "../store/usePost";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnimatePresence, motion } from 'framer-motion';
+import { fadeTransitionSettings, fadeVariants } from "../utils/framer";
 
 const PostList: React.FC = () => {
     const { setTotalPages, currentPage, postList, setPostList } = usePost();
@@ -33,17 +34,6 @@ const PostList: React.FC = () => {
         } catch (error) {
             console.error(error);
         }
-    };
-
-    const fadeVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1 },
-        exit: { opacity: 0 }
-    };
-
-    const fadeTransitionSettings = {
-        duration: 1,
-        ease: "easeInOut"
     };
 
     useEffect(() => {                                                                                                                                    
