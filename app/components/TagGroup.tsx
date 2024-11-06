@@ -29,7 +29,7 @@ const TagGroup: React.FC = () => {
 
         setTagGroup(tagArray.filter((v, i) => tagArray.indexOf(v) === i));
 
-    }, [postList, slectedTag]);
+    }, [postList]);
 
     return (
         <>
