@@ -25,6 +25,8 @@ body {
   font-size: 52px;
   margin-bottom: 8px;
   font-style: oblique;
+  width: 100%;
+  text-align: center;
 }
 
 .post-time {
