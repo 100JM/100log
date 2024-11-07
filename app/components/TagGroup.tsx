@@ -14,7 +14,7 @@ const TagGroup: React.FC<TagGroupInterface> = async ({ path }) => {
     return (
         <div className="tag-group w-[90%] mb-16 flex flex-col justify-center items-center">
             <TagGroupHeader tag={path} />
-            <div className="tag-list max-w-[90%] flex flex-wrap gap-x-5 gap-y-3">
+            <div className="tag-list max-w-[90%] flex flex-wrap gap-x-4 gap-y-3">
                 {
                     tagGroup.map((t) => {
                         return (
