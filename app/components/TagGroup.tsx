@@ -9,11 +9,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { fadeTransitionSettings, fadeVariants } from "../utils/framer";
 
 const TagGroup: React.FC = () => {
-    const { postList, slectedTag, setSelectedTag } = usePost();
+    const { postList, slectedTag } = usePost();
     const [tagGroup, setTagGroup] = useState<string[]>();
+    const [tag, setTag] = useState<string>(slectedTag);
 
     const handleSelectTag = (tag: string) => {
-        setSelectedTag(tag);
+        setTag(tag);
     };
 
     useEffect(() => {
@@ -46,14 +47,14 @@ const TagGroup: React.FC = () => {
                             transition={fadeTransitionSettings}
                             className="tag-group w-[90%] mb-16 flex flex-col justify-center items-center"
                         >
-                            <div className="slected-tag">{slectedTag}</div>
+                            <div className="slected-tag">{tag}</div>
                             <div className="tag-list max-w-[90%] flex flex-wrap gap-x-5 gap-y-3">
                                 {
                                     tagGroup?.map((t) => {
                                         return (
                                             <Link
                                                 href={'#'}
-                                                className={`tag-link ${slectedTag === t ? 'font-semibold' : ''}`}
+                                                className={`tag-link ${tag === t ? 'font-semibold' : ''}`}
                                                 key={t}
                                                 onClick={() => handleSelectTag(t)}
                                             >
