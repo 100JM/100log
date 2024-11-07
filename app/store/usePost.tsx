@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { Post } from "@/type/Post";
 
 interface usePostInterface {
     totalPages: number | null;
