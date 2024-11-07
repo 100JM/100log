@@ -1,77 +1,40 @@
-'use client';
-
 import Link from "next/link";
+import { getTagGroup, getTagCount } from "../utils/mdx";
 
-import { useState, useEffect } from "react";
-import usePost from "../store/usePost";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AnimatePresence, motion } from 'framer-motion';
-import { fadeTransitionSettings, fadeVariants } from "../utils/framer";
+import TagGroupHeader from "./TagGroupHeader";
 
-const TagGroup: React.FC = () => {
-    const { postList, slectedTag, setSelectedTag } = usePost();
-    const [tagGroup, setTagGroup] = useState<string[]>();
-    
-    const handleSelectTag = (tag: string) => {
-        setSelectedTag(tag);
-    };
+interface TagGroupInterface {
+    path: string
+}
 
-    useEffect(() => {
-        const tagArray: string[] = [];
-
-        postList?.map((p) => {
-            p.tags.map((t) => {
-                tagArray.push(t);
-            })
-        });
-
-        tagArray.unshift('All posts');
-
-        setTagGroup(tagArray.filter((v, i) => tagArray.indexOf(v) === i));
-
-    }, [postList]);
+const TagGroup: React.FC<TagGroupInterface> = async ({ path }) => {
+    const tagGroup = await getTagGroup();
+    const tagCount = await getTagCount();
 
     return (
-        <>
-            {
-                tagGroup
-                    ?
-                    <AnimatePresence>
-                        <motion.div
-                            key="tag-group"
-                            variants={fadeVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            transition={fadeTransitionSettings}
-                            className="tag-group w-[90%] mb-16 flex flex-col justify-center items-center"
-                        >
-                            <p className="slected-tag">{slectedTag}</p>
-                            <div className="tag-list max-w-[90%] flex flex-wrap gap-x-5 gap-y-3">
-                                {
-                                    tagGroup?.map((t) => {
-                                        return (
-                                            <Link
-                                                href={'#'}
-                                                className={`tag-link ${slectedTag === t ? 'font-semibold' : ''}`}
-                                                key={t}
-                                                onClick={() => handleSelectTag(t)}
-                                            >
-                                                <div className="flex">
-                                                    <p className="hover:underline">{t}</p>
-                                                    <p className="leading-3 text-xs">(1)</p>
-                                                </div>
-                                            </Link>
-                                        );
-                                    })
-                                }
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
-                    :
-                    <Skeleton className="tag-group w-[90%] mb-14 h-14 rounded-xl" />
-            }
-        </>
+        <div className="tag-group w-[90%] mb-16 flex flex-col justify-center items-center">
+            <TagGroupHeader tag={path} />
+            <div className="tag-list max-w-[90%] flex flex-wrap gap-x-5 gap-y-3">
+                {
+                    tagGroup.map((t) => {
+                        return (
+                            <Link
+                                href={t === 'All posts' ? '/' : `/tags/${t}`}
+                                className={`tag-link ${path === t ? 'font-semibold' : ''}`}
+                                key={t}
+                            >
+                                <div className="flex">
+                                    <p className="hover:underline">{t}</p>
+                                    {
+                                        <p className="leading-3 text-xs">({tagCount[t]})</p>
+                                    }
+                                </div>
+                            </Link>
+                        );
+                    })
+                }
+            </div>
+        </div>
     );
 };
 

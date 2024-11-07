@@ -1,11 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import * as fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { Post } from '@/type/Post';
 import { postsDirectory } from '@/app/utils/mdx';
 
-export async function GET(): Promise<NextResponse<Post[]>> {
+export async function GET(request: NextRequest): Promise<NextResponse<Post[]>> {
+    const tagParam = request.nextUrl.searchParams.get('tag');
+
     const fileNames = fs.readdirSync(postsDirectory);
     const posts = fileNames
         .filter((fileName) => fileName.endsWith('.mdx'))
@@ -25,5 +27,5 @@ export async function GET(): Promise<NextResponse<Post[]>> {
             };
         }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
 
-    return NextResponse.json(posts);
+    return NextResponse.json((tagParam ? posts.filter((p) => p.tags.includes(tagParam)) : posts));
 };

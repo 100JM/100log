@@ -3,34 +3,37 @@
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
+import { Post } from "@/type/Post";
 
-import { useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import usePost from "../store/usePost";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeTransitionSettings, fadeVariants } from "../utils/framer";
 
 const PostList: React.FC = () => {
-    const { setTotalPages, currentPage, postList, setPostList } = usePost();
+    const { setTotalPages, currentPage, setCurrentPage } = usePost();
+    const [pagePosts, setPagePosts] = useState<Post[]>([]);
+
     const pagePerPost = 4;
 
+    const params = useParams();
+    const tagParam = params.tag;
+
     const fetchGetAllPosts = async () => {
-        const response = await fetch('/api/post-list-api');
+        const queryParam = tagParam ? `?tag=${encodeURIComponent(tagParam as string)}` : '';
+        const response = await fetch(`/api/post-list-api${queryParam}`);
 
         try {
             if (response.ok) {
                 const posts = await response.json();
 
-                if (posts.length > 0 && posts.length < 5) {
-                    setTotalPages(1);
-                } else {
-                    setTotalPages(Math.ceil(posts.length / pagePerPost));
-                }
-
                 const currentPagePosts = posts.slice(((currentPage - 1) * pagePerPost), currentPage * pagePerPost);
-                setPostList(currentPagePosts);
-            }
 
+                setPagePosts(currentPagePosts);                
+                setTotalPages(Math.ceil(posts.length / pagePerPost));
+            }
         } catch (error) {
             console.error(error);
         }
@@ -40,10 +43,14 @@ const PostList: React.FC = () => {
         fetchGetAllPosts();
     }, [currentPage]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [])
+
     return (
         <>
             {
-                postList.length > 0
+                pagePosts.length !== 0
                     ?
                     <AnimatePresence>
                         <motion.div
@@ -55,21 +62,40 @@ const PostList: React.FC = () => {
                             transition={fadeTransitionSettings}
                             className="w-[90%] grid gap-6 gap-y-10 mb-6 post-list"
                         >
-                            {postList.map((post) => {
-                                return (
-                                    <Link href={`posts/${post.slug}`} key={post.slug} className="h-[450px]">
-                                        <div className="h-2/3 relative">
-                                            <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
-                                        </div>
-                                        <div className="h-1/3 mt-3">
-                                            <div className="line-clamp-1 flex items-center">
-                                                <Tags tags={undefined} date={post.date} />
+                            {!tagParam &&
+                                pagePosts.map((post) => {
+                                    return (
+                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
+                                            <div className="h-2/3 relative">
+                                                <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
                                             </div>
-                                            <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
-                                        </div>
-                                    </Link>
-                                );
-                            })}
+                                            <div className="h-1/3 mt-3">
+                                                <div className="line-clamp-1 flex items-center">
+                                                    <Tags tags={undefined} date={post.date} />
+                                                </div>
+                                                <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            </div>
+                                        </Link>
+                                    );
+                                })
+                            }
+                            {tagParam &&
+                                pagePosts.filter((p) => p.tags.includes(tagParam as string)).map((post) => {
+                                    return (
+                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
+                                            <div className="h-2/3 relative">
+                                                <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
+                                            </div>
+                                            <div className="h-1/3 mt-3">
+                                                <div className="line-clamp-1 flex items-center">
+                                                    <Tags tags={undefined} date={post.date} />
+                                                </div>
+                                                <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            </div>
+                                        </Link>
+                                    );
+                                })
+                            }
                         </motion.div>
                     </AnimatePresence>
                     :

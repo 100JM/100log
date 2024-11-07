@@ -66,9 +66,70 @@ export async function getLatestPost(): Promise<Post> {
                 content,
                 thumbnail: data.thumbnail
             };
-        }).reduce((latestPost, post ) => {
+        }).reduce((latestPost, post) => {
             return new Date(post.date).getTime() > new Date(latestPost.date).getTime() ? post : latestPost;
-        })
+        });
 
     return posts;
 };
+
+export async function getTagGroup(): Promise<string[]> {
+    const fileNames = fs.readdirSync(postsDirectory);
+    const posts = fileNames
+        .filter((fileName) => fileName.endsWith('.mdx'))
+        .map((fileName) => {
+            const fullPath = path.join(postsDirectory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const { data } = matter(fileContents);
+
+            return {
+                tags: data.tags,
+                date: data.date,
+            };
+        }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
+
+    const tagArray: string[] = [];
+    posts.map((p) => {
+        p.tags.map((t: string) => {
+            tagArray.push(t);
+        })
+    })
+    tagArray.unshift('All posts');
+
+    return tagArray.filter((v, i) => tagArray.indexOf(v) === i);
+};
+
+export async function getTagCount(): Promise<{ [key: string]: number }> {
+    const fileNames = fs.readdirSync(postsDirectory);
+    const posts = fileNames
+        .filter((fileName) => fileName.endsWith('.mdx'))
+        .map((fileName) => {
+            const fullPath = path.join(postsDirectory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const { data } = matter(fileContents);
+
+            return {
+                tags: data.tags,
+            };
+        });
+    const tagArray: string[] = [];
+    posts.map((p) => {
+        p.tags.map((t: string) => {
+            tagArray.push(t);
+        })
+    })
+    tagArray.unshift('All posts');
+
+
+    const tagCount = tagArray.reduce<{ [key: string]: number }>((p, c) => {
+        if (c === 'All posts') {
+            p[c] = posts.length;
+            return p;
+        } else {
+            p[c] = (p[c] || 0) + 1;
+            return p;
+        }
+    }, {});
+
+    return tagCount;
+}

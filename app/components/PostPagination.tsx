@@ -42,15 +42,14 @@ const PostPagination: React.FC = () => {
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
-                            <PaginationPrevious href="#" onClick={() => handlePageChange(Math.max(1, currentPage - 1))} />
+                            <PaginationPrevious className="cursor-pointer" onClick={() => handlePageChange(Math.max(1, currentPage - 1))} />
                         </PaginationItem>
                         {pageRange?.map((page) => (
                             <PaginationItem key={page}>
                                 <PaginationLink
-                                    href="#"
                                     isActive={currentPage === page}
                                     onClick={() => handlePageChange(page)}
-                                    className="page-link"
+                                    className="page-link cursor-pointer"
                                 >
                                     {page}
                                 </PaginationLink>
@@ -62,7 +61,7 @@ const PostPagination: React.FC = () => {
                             </PaginationItem>
                         }
                         <PaginationItem>
-                            <PaginationNext href="#" onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} />
+                            <PaginationNext className="cursor-pointer" onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} />
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>

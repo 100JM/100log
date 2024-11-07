@@ -13,7 +13,7 @@ const HighlightPost: React.FC = async () => {
         <div className="w-[90%] mb-16 flex flex-row gap-6 highlight-post">
             <Link
                 href={`posts/${latestPost.slug}`}
-                className="h-[600px] w-full cursor-pointer hover:text-slate-500 active:text-slate-500"
+                className="h-[600px] w-full cursor-pointer"
             >
                     <div className="text-4xl flex items-center justify-start py-2 h-[70px]">
                         <i className="ri-pushpin-2-line"></i>

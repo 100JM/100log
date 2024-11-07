@@ -6,6 +6,7 @@ import PostPagination from "./components/PostPagination";
 import TagGroup from "./components/TagGroup";
 
 export default function Home() {
+
   return (
     <div>
       <Header />
@@ -15,7 +16,7 @@ export default function Home() {
           <h5 className="text-2xl">Welcome to my blog👋</h5>
         </div>
         <HighlightPost />
-        <TagGroup />
+        <TagGroup path={'All posts'} />
         <PostList />
         <PostPagination />
         <Contact />
