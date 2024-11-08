@@ -24,7 +24,7 @@ const PostPage = async ({ params, }: { params: { slug: string }; }) => {
                     <article className="w-full my-10 p-6 flex justify-center">
                         <div className="w-full">
                             <h1 className="text-5xl mb-4">{post.title}</h1>
-                            <div className="flex flex-wrap text-lg mb-8 justify-start items-end text-slate-500 gap-6">
+                            <div className="flex flex-wrap text-lg mb-8 justify-start items-end">
                                 <Tags tags={post.tags} date={post.date} />
                             </div>
                             <div className="post-contents">

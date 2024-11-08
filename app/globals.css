@@ -70,6 +70,17 @@ body {
   color: rgb(100 116 139);
 }
 
+.post-contents>ol {
+  list-style-type: decimal;
+  padding-left: 30px;
+  font-size: 22px;
+}
+
+.post-contents>ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
 @media screen and (min-width: 960px) {
   .post-list {
     grid-template-columns: repeat(2, 1fr);
