@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Post } from '@/type/Post';
+import { Post, PostShort } from '@/type/Post';
 
 export const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -133,3 +133,23 @@ export async function getTagCount(): Promise<{ [key: string]: number }> {
 
     return tagCount;
 }
+
+export async function getPostsShort(): Promise<PostShort[]> {
+    const fileNames = fs.readdirSync(postsDirectory);
+    const posts = fileNames
+        .filter((fileName) => fileName.endsWith('.mdx'))
+        .map((fileName) => {
+            const fullPath = path.join(postsDirectory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const { data, content } = matter(fileContents);
+
+            return {
+                title: data.title,
+                description: data.description,
+                date: data.date,
+                slug: fileName.replace(/\.mdx$/, ''),
+            };
+        }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
+
+    return posts;
+};

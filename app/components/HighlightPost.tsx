@@ -15,9 +15,8 @@ const HighlightPost: React.FC = async () => {
                 href={`posts/${latestPost.slug}`}
                 className="h-[600px] w-full cursor-pointer"
             >
-                    <div className="text-4xl flex items-center justify-start py-2 h-[70px]">
-                        <i className="ri-pushpin-2-line"></i>
-                        <span>최신 POST</span>
+                    <div className="text-4xl flex items-center justify-start p-2 h-[70px] oblique-text">
+                        <span>Latest post.</span>
                     </div>
                     <div className="h-[530px] rounded-xl w-full">
                         <div className="w-full h-3/4 relative">

@@ -5,23 +5,25 @@ import { fadeTransitionSettings, fadeVariants } from "../utils/framer";
 
 interface TagGroupHeaderInterface {
     tag: string;
+    cnt: number;
 }
 
-const TagGroupHeader: React.FC<TagGroupHeaderInterface> = ({ tag }) => {
+const TagGroupHeader: React.FC<TagGroupHeaderInterface> = ({ tag, cnt }) => {
 
     return (
         <AnimatePresence>
-            <motion.p
+            <motion.div
                 key="tag-header"
                 variants={fadeVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={fadeTransitionSettings}
-                className="slected-tag"
+                className="slected-tag gap-x-2"
             >
-                {tag}
-            </motion.p>
+                <p>{tag}</p>
+                <p className="slected-tag-cnt">{`(${cnt})`}</p>
+            </motion.div>
         </AnimatePresence>
     );
 };
