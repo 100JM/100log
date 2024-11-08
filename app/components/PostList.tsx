@@ -60,7 +60,7 @@ const PostList: React.FC = () => {
                             animate="visible"
                             exit="exit"
                             transition={fadeTransitionSettings}
-                            className="w-[90%] grid gap-6 gap-y-10 mb-6 post-list"
+                            className="w-[90%] grid gap-6 gap-y-10 mb-6 mlg:w-full mlg:grid-cols-2"
                         >
                             {!tagParam &&
                                 pagePosts.map((post) => {
@@ -99,7 +99,7 @@ const PostList: React.FC = () => {
                         </motion.div>
                     </AnimatePresence>
                     :
-                    <div className="w-[90%] grid gap-6 gap-y-10 mb-6 post-list">
+                    <div className="w-[90%] grid gap-6 gap-y-10 mb-6 mlg:w-full mlg:grid-cols-2">
                         {Array.from({ length: pagePerPost }, (_, index) => {
                             return (
                                 <div key={index} className="h-[450px]">

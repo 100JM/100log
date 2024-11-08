@@ -10,7 +10,7 @@ const HighlightPost: React.FC = async () => {
     const latestPost = await getLatestPost();
 
     return (
-        <div className="w-[90%] mb-16 flex flex-row gap-6 highlight-post">
+        <div className="w-[90%] mb-16 flex flex-col-reverse gap-6 mlg:w-full mlg:flex-row">
             <Link
                 href={`posts/${latestPost.slug}`}
                 className="h-[600px] w-full cursor-pointer"
