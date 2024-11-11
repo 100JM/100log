@@ -8,10 +8,10 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 import rehypeSlug from 'rehype-slug';
 import rehypePrettyCode from 'rehype-pretty-code';
-// import githubLight from 'tm-themes/themes/github-light.json'
+// import githubLight from 'tm-themes/themes/material-theme-lighter.json'
 import githubDark from 'tm-themes/themes/github-dark.json'
 
-const PostPage = async ({ params, }: { params: { slug: string }; }) => {
+const PostPage = async ({ params }: { params: { slug: string }; }) => {
     const post = await getPostBySlug(params.slug);
 
     if (!post) {
