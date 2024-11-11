@@ -6,8 +6,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
-
-import 'prismjs/themes/prism-solarizedlight.css';
+import rehypeSlug from 'rehype-slug';
+import rehypePrettyCode from 'rehype-pretty-code';
+// import githubLight from 'tm-themes/themes/github-light.json'
+import githubDark from 'tm-themes/themes/github-dark.json'
 
 const PostPage = async ({ params, }: { params: { slug: string }; }) => {
     const post = await getPostBySlug(params.slug);
@@ -15,6 +17,11 @@ const PostPage = async ({ params, }: { params: { slug: string }; }) => {
     if (!post) {
         notFound();
     }
+
+    const rehypeOptions = {
+        theme: githubDark,
+        keepBackground: true,
+    };
 
     return (
         <div>
@@ -28,7 +35,17 @@ const PostPage = async ({ params, }: { params: { slug: string }; }) => {
                                 <Tags tags={post.tags} date={post.date} />
                             </div>
                             <div className="post-contents">
-                                <MDXRemote source={post.content} />
+                                <MDXRemote source={post.content} options={{
+                                    mdxOptions: {
+                                        rehypePlugins: [
+                                            [
+                                                rehypePrettyCode,
+                                                rehypeOptions
+                                            ],
+                                            rehypeSlug
+                                        ]
+                                    }
+                                }} />
                             </div>
                         </div>
                     </article>

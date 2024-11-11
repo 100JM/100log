@@ -2,9 +2,9 @@
 import createMDX from '@next/mdx';
 import remarkGfm from 'remark-gfm';  // GitHub Flavored Markdown 지원 (선택사항)
 import rehypeRaw from 'rehype-raw';
-import rehypePrismAll from 'rehype-prism-plus/all';
 
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     images: {
@@ -23,16 +23,18 @@ const nextConfig = {
             }
         ],
     },
-    experimental: {
-        mdxRs: true
-    },
+    // experimental: {
+    //     mdxRs: true
+    // },
 };
 
 const withMDX = createMDX({
     extension: /\.mdx?$/,
     options: {
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeRaw, rehypePrismAll],
+        rehypePlugins: [
+            rehypeRaw,
+        ],
     },
 });
 

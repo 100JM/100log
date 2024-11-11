@@ -9,9 +9,9 @@ description: '자바스크립트 변수와 관련된 호이스팅, TDZ, 스코�
 <img src="/images/javascript_simpson.png" alt="main-img" className="rounded-xl" />
 <br />
 
-<h2>변수 - hoisting, tdz, scope</h2>
+## 변수 - hoisting, tdz, scope
 
-<h3>let, const, var</h3>
+### let, const, var
 
 var는 한번 선언된 변수를 재선언 할 수 있다.
 ```javascript
@@ -91,7 +91,7 @@ name3 = 'Spider-Man'; // error !
 
 즉 **TDZ 시맨틱은 선언 전에 변수에 접근하는 것을 금지한다.**<br /> 그로인해 let과 const도 호이스팅되지만 TDZ에 의해 접근할 수 없어서 ReferenceError가 발생하는 것이다.
 
-<h3>scope</h3>
+### scope
 
 var : 함수 스코프(function-scoped)
 <br/>let, const : 블록 스코프(block-scoped) - 모든 코드블록에서 선언된 변수는 코드블록 내에서만 유효하며 외부에선 접근할 수 없다. *즉 코드블록 내부에서 선언된 변수는 지역 변수다.*

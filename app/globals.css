@@ -170,12 +170,11 @@ body {
   }
 }
 
-pre {
+[data-rehype-pretty-code-figure] pre {
   overflow-x: auto;
   padding: 1rem;
   border-radius: 0.5rem;
   margin: 1rem 0;
-  background-color: #f1f5f9;
 }
 
 @layer base {
