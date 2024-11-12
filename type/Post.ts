@@ -14,3 +14,14 @@ export interface PostShort {
     date: string;
     slug: string;
 }
+
+export interface PostWithHeaders {
+    title: string;
+    description: string;
+    date: string;
+    slug: string;
+    tags: string[];
+    content: string;
+    thumbnail: string;
+    headers: string[];
+}

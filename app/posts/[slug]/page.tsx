@@ -1,15 +1,16 @@
 import Header from '@/app/components/Header';
 import Contact from '@/app/components/Contact';
+import PostHeaderNav from '@/app/components/PostHeaderNav';
 import Tags from '@/app/components/Tags';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 import rehypeSlug from 'rehype-slug';
-import rehypePrettyCode from 'rehype-pretty-code';
-// import githubLight from 'tm-themes/themes/material-theme-lighter.json'
-import githubDark from 'tm-themes/themes/github-dark.json'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePrism from 'rehype-prism-plus';
+
+import 'prism-themes/themes/prism-vsc-dark-plus.css';
 
 const PostPage = async ({ params }: { params: { slug: string }; }) => {
     const post = await getPostBySlug(params.slug);
@@ -17,11 +18,6 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
     if (!post) {
         notFound();
     }
-
-    const rehypeOptions = {
-        theme: githubDark,
-        keepBackground: true,
-    };
 
     return (
         <div>
@@ -38,20 +34,16 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                                 <MDXRemote source={post.content} options={{
                                     mdxOptions: {
                                         rehypePlugins: [
-                                            [
-                                                rehypePrettyCode,
-                                                rehypeOptions
-                                            ],
-                                            rehypeSlug
+                                            rehypePrism,
+                                            rehypeSlug,
+                                            [rehypeAutolinkHeadings, { behavior: 'wrap' }]
                                         ]
                                     }
                                 }} />
                             </div>
                         </div>
                     </article>
-                    <div className="w-[30%] hidden xxl:block">
-                        <Skeleton className="h-[450px] rounded-xl mt-16 sticky top-28" />
-                    </div>
+                    <PostHeaderNav headers={post.headers} />
                 </div>
                 <Contact />
             </main>

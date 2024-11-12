@@ -75,8 +75,8 @@ body {
 }
 
 .post-contents>h4 {
-  font-size: 20px;
-  margin: 20px 0;
+  font-size: 22px;
+  margin: 8px 0;
 }
 
 .post-contents>blockquote {
@@ -170,11 +170,9 @@ body {
   }
 }
 
-[data-rehype-pretty-code-figure] pre {
-  overflow-x: auto;
-  padding: 1rem;
+pre[class*="language-"] {
   border-radius: 0.5rem;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1.5rem 0 !important;
 }
 
 @layer base {

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Post, PostShort } from '@/type/Post';
+import { Post, PostShort, PostWithHeaders } from '@/type/Post';
 
 export const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -28,11 +28,14 @@ export async function getAllPosts(): Promise<Post[]> {
     return posts.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
 };
 
-export async function getPostBySlug(slug: string): Promise<Post | null> {
+export async function getPostBySlug(slug: string): Promise<PostWithHeaders | null> {
     try {
         const fullPath = path.join(postsDirectory, `${slug}.mdx`);
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
+        const headerPattern = /^#{1,6}\s+(.+)$/gm;
+
+        const headerList = content.split('\n').filter((line) => line.match(headerPattern)).map(h => h.split('\r')[0]);
 
         return {
             title: data.title,
@@ -41,7 +44,8 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
             slug,
             tags: data.tags,
             content,
-            thumbnail: data.thumbnail
+            thumbnail: data.thumbnail,
+            headers: headerList,
         };
     } catch {
         return null;
