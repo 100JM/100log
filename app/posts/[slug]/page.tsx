@@ -2,6 +2,7 @@ import Header from '@/app/components/Header';
 import Contact from '@/app/components/Contact';
 import PostHeaderNav from '@/app/components/PostHeaderNav';
 import Tags from '@/app/components/Tags';
+import RelatedPost from '@/app/components/RelatedPost';
 
 import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -45,6 +46,7 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                     </article>
                     <PostHeaderNav headers={post.headers} />
                 </div>
+                <RelatedPost />
                 <Contact />
             </main>
             <footer className="flex justify-center items-center w-full h-20 text-sm font-thin text-slate-400 dark:text-[#f7f9fb]">

@@ -35,7 +35,7 @@ export async function getPostBySlug(slug: string): Promise<PostWithHeaders | nul
         const { data, content } = matter(fileContents);
         const headerPattern = /^#{1,6}\s+(.+)$/gm;
 
-        const headerList = content.split('\n').filter((line) => line.match(headerPattern)).map(h => h.split('\r')[0]);
+        const headerList = content.split('\n').filter((line) => line.match(headerPattern)).map(h => h.replace('\r', '\n'));
 
         return {
             title: data.title,

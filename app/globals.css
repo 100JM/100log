@@ -46,10 +46,34 @@ body {
   margin-right: 12px;
 }
 
+.post-nav,
 .post-contents {
   font-family: "Nanum Gothic Coding", monospace;
   font-weight: 400;
   font-style: normal;
+}
+
+.post-nav {
+  color: #868E96;
+  border-left: 2px solid #F1F3F5;
+}
+
+.post-nav>h2:hover,
+.post-nav>h3:hover,
+.post-nav>h4:hover {
+  text-decoration: underline;
+  color: hsl(var(--foreground));
+}
+
+.post-nav>h3 {
+  font-size: 15px;
+  padding-left: 8px;
+  margin-top: 4px;
+}
+
+.post-nav>h4 {
+  font-size: 14px;
+  padding-left: 16px;
 }
 
 .text-info {
