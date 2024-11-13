@@ -8,13 +8,7 @@ interface PostHeaderNavInterface {
 
 const PostHeaderNav: React.FC<PostHeaderNavInterface> = ({ headers }) => {
     const headerToString = headers.map(header => {
-        if (header.startsWith('###')) {
-            return header.trim();
-        } else if (header.startsWith('##')) {
-            return header.trim();
-        } else {
-            return `## ${header.trim()}`;
-        }
+        return header.trim();
     }).join('\n\n');
 
     return (

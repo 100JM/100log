@@ -8,7 +8,6 @@ import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrism from 'rehype-prism-plus';
 
 import 'prism-themes/themes/prism-vsc-dark-plus.css';
@@ -37,7 +36,6 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                                         rehypePlugins: [
                                             rehypePrism,
                                             rehypeSlug,
-                                            [rehypeAutolinkHeadings, { behavior: 'wrap' }]
                                         ]
                                     }
                                 }} />
