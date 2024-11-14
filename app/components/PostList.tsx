@@ -31,7 +31,7 @@ const PostList: React.FC = () => {
 
                 const currentPagePosts = posts.slice(((currentPage - 1) * pagePerPost), currentPage * pagePerPost);
 
-                setPagePosts(currentPagePosts);                
+                setPagePosts(currentPagePosts);
                 setTotalPages(Math.ceil(posts.length / pagePerPost));
             }
         } catch (error) {
@@ -39,7 +39,7 @@ const PostList: React.FC = () => {
         }
     };
 
-    useEffect(() => {                                                                                                                                    
+    useEffect(() => {
         fetchGetAllPosts();
     }, [currentPage]);
 
@@ -60,21 +60,19 @@ const PostList: React.FC = () => {
                             animate="visible"
                             exit="exit"
                             transition={fadeTransitionSettings}
-                            className="w-[90%] grid gap-6 gap-y-10 mb-6 mlg:w-full mlg:grid-cols-2"
+                            className="w-[90%] grid gap-9 mb-6 mlg:w-full mlg:grid-cols-2"
                         >
                             {!tagParam &&
                                 pagePosts.map((post) => {
                                     return (
                                         <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
-                                            <div className="h-2/3 relative">
+                                            <div className="h-[70%] relative">
                                                 <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
                                             </div>
-                                            <div className="h-1/3 mt-3">
-                                                <div className="line-clamp-1 flex items-center">
-                                                    <Tags tags={undefined} date={post.date} />
-                                                </div>
-                                                <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            <div className="line-clamp-1 flex items-center mt-3">
+                                                <Tags tags={undefined} date={post.date} />
                                             </div>
+                                            <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
                                         </Link>
                                     );
                                 })
@@ -83,15 +81,13 @@ const PostList: React.FC = () => {
                                 pagePosts.filter((p) => p.tags.includes(tagParam as string)).map((post) => {
                                     return (
                                         <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
-                                            <div className="h-2/3 relative">
+                                            <div className="h-[70%] relative">
                                                 <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
                                             </div>
-                                            <div className="h-1/3 mt-3">
-                                                <div className="line-clamp-1 flex items-center">
-                                                    <Tags tags={undefined} date={post.date} />
-                                                </div>
-                                                <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            <div className="line-clamp-1 flex items-center mt-3">
+                                                <Tags tags={undefined} date={post.date} />
                                             </div>
+                                            <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
                                         </Link>
                                     );
                                 })
@@ -99,15 +95,13 @@ const PostList: React.FC = () => {
                         </motion.div>
                     </AnimatePresence>
                     :
-                    <div className="w-[90%] grid gap-6 gap-y-10 mb-6 mlg:w-full mlg:grid-cols-2">
+                    <div className="w-[90%] grid gap-9 mb-6 mlg:w-full mlg:grid-cols-2">
                         {Array.from({ length: pagePerPost }, (_, index) => {
                             return (
                                 <div key={index} className="h-[450px]">
-                                    <Skeleton className="h-2/3 rounded-2xl" />
-                                    <div className="h-1/3 mt-3">
-                                        <Skeleton className="h-11 w-36 rounded-full" />
-                                        <Skeleton className="h-11 mt-3 rounded-2xl" />
-                                    </div>
+                                    <Skeleton className="h-[70%] rounded-2xl" />
+                                    <Skeleton className="h-11 w-36 mt-3 rounded-full" />
+                                    <Skeleton className="h-11 mt-3 rounded-2xl" />
                                 </div>
                             );
                         })}

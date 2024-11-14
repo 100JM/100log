@@ -15,8 +15,8 @@ const PostHeaderNav: React.FC<PostHeaderNavInterface> = ({ headers }) => {
         <>
             {
                 headerToString !== '' ?
-                    <div className="w-[30%] hidden xxl:block my-16">
-                        <div className="post-nav max-h-[600px] sticky top-28 overflow-auto flex flex-col gap-2 pl-2">
+                    <div className="w-[30%] hidden xxl:block">
+                        <div className="post-nav max-h-[600px] sticky top-28 overflow-auto flex flex-col gap-2 pl-2 my-16">
                             <MDXRemote source={headerToString} options={{
                                 mdxOptions: {
                                     rehypePlugins: [

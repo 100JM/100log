@@ -24,4 +24,6 @@ export interface PostWithHeaders {
     content: string;
     thumbnail: string;
     headers: string[];
+    realatedPosts: Post[];
+    isRelated: boolean;
 }

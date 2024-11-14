@@ -37,9 +37,9 @@ const PostPagination: React.FC = () => {
             {
                 totalPages === null
                 ?
-                <Skeleton className="h-6 w-80 m-2" />
+                <Skeleton className="h-8 w-80 mt-3 mb-2" />
                 :
-                <Pagination>
+                <Pagination className="mt-3">
                     <PaginationContent>
                         <PaginationItem>
                             <PaginationPrevious className="cursor-pointer" onClick={() => handlePageChange(Math.max(1, currentPage - 1))} />
