@@ -14,7 +14,7 @@ const TagPage = ({ params }: { params: { tag: string } }) => {
                     <h2 className="text-6xl">100JM</h2>
                     <h5 className="text-2xl">Welcome to my blog👋</h5>
                 </div>
-                <TagGroup path={params.tag}/>
+                <TagGroup path={decodeURIComponent(params.tag)}/>
                 <PostList />
                 <PostPagination />
                 <Contact />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Tags from "./Tags";
+import PostDescription from "./PostDescription";
 import { Post } from "@/type/Post";
 
 interface RelatedPostInterface {
@@ -24,9 +25,10 @@ const RelatedPost: React.FC<RelatedPostInterface> = ({ relatedPosts, isRelated }
                 {
                     relatedPosts.map((post) => {
                         return (
-                            <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
+                            <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px] group">
                                 <div className="h-[70%] relative">
                                     <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
+                                    <PostDescription tags={post.tags} description={post.description} />
                                 </div>
                                 <div className="line-clamp-1 flex items-center mt-3">
                                     <Tags tags={undefined} date={post.date} />

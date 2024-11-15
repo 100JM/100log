@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Tags from "./Tags";
+import PostDescription from "./PostDescription";
 import { Post } from "@/type/Post";
 
 import { useParams } from "next/navigation";
@@ -22,7 +23,7 @@ const PostList: React.FC = () => {
     const tagParam = params.tag;
 
     const fetchGetAllPosts = async () => {
-        const queryParam = tagParam ? `?tag=${encodeURIComponent(tagParam as string)}` : '';
+        const queryParam = tagParam ? `?tag=${tagParam as string}` : '';
         const response = await fetch(`/api/post-list-api${queryParam}`);
 
         try {
@@ -45,12 +46,12 @@ const PostList: React.FC = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [])
+    }, []);
 
     return (
         <>
             {
-                pagePosts.length !== 0
+                pagePosts.length > 0
                     ?
                     <AnimatePresence>
                         <motion.div
@@ -65,9 +66,10 @@ const PostList: React.FC = () => {
                             {!tagParam &&
                                 pagePosts.map((post) => {
                                     return (
-                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
+                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px] group">
                                             <div className="h-[70%] relative">
                                                 <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
+                                                <PostDescription tags={post.tags} description={post.description} />
                                             </div>
                                             <div className="line-clamp-1 flex items-center mt-3">
                                                 <Tags tags={undefined} date={post.date} />
@@ -78,11 +80,12 @@ const PostList: React.FC = () => {
                                 })
                             }
                             {tagParam &&
-                                pagePosts.filter((p) => p.tags.includes(tagParam as string)).map((post) => {
+                                pagePosts.filter((p) => p.tags.includes(decodeURIComponent(tagParam as string))).map((post) => {
                                     return (
-                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px]">
+                                        <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px] group">
                                             <div className="h-[70%] relative">
                                                 <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
+                                                <PostDescription tags={post.tags} description={post.description} />
                                             </div>
                                             <div className="line-clamp-1 flex items-center mt-3">
                                                 <Tags tags={undefined} date={post.date} />
