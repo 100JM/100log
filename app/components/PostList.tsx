@@ -74,7 +74,7 @@ const PostList: React.FC = () => {
                                             <div className="line-clamp-1 flex items-center mt-3">
                                                 <Tags tags={undefined} date={post.date} />
                                             </div>
-                                            <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            <h2 className="text-3xl line-clamp-2 mt-3 break-all">{post.title}</h2>
                                         </Link>
                                     );
                                 })
@@ -90,7 +90,7 @@ const PostList: React.FC = () => {
                                             <div className="line-clamp-1 flex items-center mt-3">
                                                 <Tags tags={undefined} date={post.date} />
                                             </div>
-                                            <h2 className="text-3xl line-clamp-2 mt-3">{post.title}</h2>
+                                            <h2 className="text-3xl line-clamp-2 mt-3 break-all">{post.title}</h2>
                                         </Link>
                                     );
                                 })

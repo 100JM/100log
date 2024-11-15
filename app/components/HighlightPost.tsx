@@ -20,16 +20,14 @@ const HighlightPost: React.FC = async () => {
                         <span>Latest post.</span>
                     </div>
                     <div className="h-[530px] rounded-xl w-full">
-                        <div className="w-full h-3/4 relative">
+                        <div className="w-full h-[75%] relative">
                             <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} className="rounded-[18px]" />
                             <PostDescription tags={latestPost.tags} description={latestPost.description} />
                         </div>
-                        <div className="w-full h-1/4">
-                            <div className="h-1/2 line-clamp-1 flex items-center">
-                                <Tags tags={undefined} date={latestPost.date} />
-                            </div>
-                            <h2 className="text-3xl line-clamp-2">{latestPost.title}</h2>
+                        <div className="line-clamp-1 flex items-center mt-3">
+                            <Tags tags={undefined} date={latestPost.date} />
                         </div>
+                        <h2 className="text-3xl line-clamp-2 mt-3 break-all">{latestPost.title}</h2>
                     </div>
                 
             </Link>

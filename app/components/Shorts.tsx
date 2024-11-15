@@ -9,7 +9,7 @@ const Shorts = async () => {
             <div className="text-4xl flex items-center justify-start p-2 h-[70px] oblique-text mlg:pl-4">
                 <span>Shorts.</span>
             </div>
-            <div className="shorts-list overflow-y-auto max-h-[330px] flex flex-col gap-y-4 text-sm mlg:pl-4 mlg:max-h-[500px] mlg:gap-y-6">
+            <div className="shorts-list overflow-y-auto max-h-[330px] flex flex-col gap-y-4 text-sm mlg:pl-4 mlg:max-h-[530px] mlg:gap-y-6">
                 {
                     postsShort.map((s) => {
                         return (
