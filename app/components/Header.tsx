@@ -1,4 +1,5 @@
 import ModeButton from "./ModeButton";
+import WeatherWidget from "./WeatherWidget";
 
 const Header: React.FC = () => {
 
@@ -11,6 +12,7 @@ const Header: React.FC = () => {
             </div>
             <div className="flex items-center">
                 <div className="flex items-center gap-3">
+                    <WeatherWidget />
                     <a className="hover:underline" href="#">
                         <p>About</p>
                     </a>
