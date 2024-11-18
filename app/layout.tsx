@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Do_Hyeon } from "next/font/google"
+import 'remixicon/fonts/remixicon.css';
 
 const dohyeon = Do_Hyeon({
     subsets: ['latin'],

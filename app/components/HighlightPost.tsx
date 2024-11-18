@@ -5,8 +5,6 @@ import Shorts from "./Shorts";
 import Tags from "./Tags";
 import PostDescription from "./PostDescription";
 
-import 'remixicon/fonts/remixicon.css';
-
 const HighlightPost: React.FC = async () => {
     const latestPost = await getLatestPost();
 
