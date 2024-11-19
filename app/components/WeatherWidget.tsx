@@ -65,7 +65,7 @@ const WeatherWidget: React.FC = () => {
 
     const { data: weatherData, error: weatherError } = useSWR(
         geoData ? ['/api/weather-api', geoData] : null,
-        ([_, geoData]) => weatherFetcher(geoData),
+        ([_url, geoData]) => weatherFetcher(geoData),
         {
             refreshInterval: 300000,
             revalidateOnFocus: false,
