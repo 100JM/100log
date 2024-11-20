@@ -35,9 +35,9 @@ const geolocationfetcher = () => {
     });
 };
 
-const weatherFetcher = async (coordinates: CoordinatesInterface) => {
+const weatherFetcher = async (url:string, coordinates: CoordinatesInterface) => {
     const { latitude, longitude } = coordinates;
-    const response = await axios.get(`/api/weather-api?x=${longitude}&y=${latitude}`);
+    const response = await axios.get(`${url}?x=${longitude}&y=${latitude}`);
 
     if (response.data.error) {
         throw new Error(response.data.error);
@@ -65,7 +65,7 @@ const WeatherWidget: React.FC = () => {
 
     const { data: weatherData, error: weatherError } = useSWR(
         geoData ? ['/api/weather-api', geoData] : null,
-        ([_url, geoData]) => weatherFetcher(geoData),
+        ([url, geoData]) => weatherFetcher(url, geoData),
         {
             refreshInterval: 300000,
             revalidateOnFocus: false,
