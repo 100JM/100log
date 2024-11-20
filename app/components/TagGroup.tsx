@@ -12,7 +12,7 @@ const TagGroup: React.FC<TagGroupInterface> = async ({ path }) => {
     const tagCount = await getTagCount();
 
     return (
-        <div className="w-[90%] mb-16 flex flex-col justify-center items-center mlg:w-full">
+        <div className="w-[90%] mb-8 flex flex-col justify-center items-center mlg:w-full mlg:mb-16">
             <TagGroupHeader tag={path} cnt={tagCount[path]} />
             <div className="max-w-[90%] flex flex-wrap gap-x-4 gap-y-3 mlg:max-w-[60%]">
                 {

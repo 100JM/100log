@@ -1,0 +1,187 @@
+---
+title: 'Next.js - 이미지를 어디에 저장할까?, app 내부 / public 디렉토리 / 외부 이미지, 용도에 알맞게 사용해보자'
+date: '2024-11-20'
+tags: ['Next.js']
+thumbnail: '/images/next_main.png'
+description: 'Next.js를 사용하다 보면 이미지를 어디에 저장해야할지 고민될 때가 있다. 역할을 나누어 사용하면 훨씬 효율적이다.'
+---
+
+<img src="/images/next_main.png" alt="main-img" className="rounded-xl" />
+<br />
+
+<p className="text-info">본 포스트는 Next.js 13버전 이상, app 라우터 방식을 기준으로 작성되었습니다. </p>
+
+## Next.js 이미지 파일 경로
+
+### app 내부와 public 디렉토리
+
+#### app 내부에서 사용되는 이미지
+- **용도**
+    - 페이지나 컴포넌트에서 동적으로 렌더링되거나, 최적화가 필요한 이미지.
+- **처리 방식**
+    - Next.js의 **`Image` 컴포넌트**를 사용하여 **최적화**.
+- **장점**
+  - 자동으로 최적화된 크기의 이미지 제공.
+  - WebP 지원 등 브라우저 호환성을 자동으로 관리.
+  - Lazy loading, 품질 최적화 등 다양한 기능 제공.
+- **예시**
+  ```javascript
+  import Image from 'next/image';
+  import exampleImg from '../assets/example.jpg'; // 예를 들어 app 내부의 이미지 파일
+
+  export default function Page() {
+    return (
+      <div>
+        <h1>Example Page</h1>
+        <Image src={exampleImg} alt="Example" width={600} height={400} />
+      </div>
+    );
+  }
+  ```
+
+<br />
+#### public 디렉토리
+
+- **용도**
+    - 정적인 파일(이미지, 아이콘, 폰트, 동영상 등) 저장.
+    - 예: 블로그에 사용되는 MDX 파일에서 참조할 이미지.
+- **처리 방식**
+    - 직접 URL로 참조 (`/images/example.jpg`).
+    - 최적화가 필요 없다면 `public`에 두는 것이 적합합니다.
+- **장점**
+  - 별도의 import 없이 **정적 경로로 참조** 가능.
+  - 경로와 파일명만 있으면 빠르게 접근 가능.
+- **예시**
+  - 디렉토리 구조
+    ```csharp
+    project/
+    ├── app/           # Next.js의 app 디렉토리
+    ├── public/        # 정적 파일을 위한 디렉토리 (여기 이미지를 넣어야 함)
+    │   ├── images/
+    │   │   └── example.jpg
+    ```
+    - MDX 파일
+        ```md
+        ![Example Image](/images/example.jpg)
+        ```
+    - Next.js 컴포넌트에서
+        ```javascript
+        export default function Page() {
+            return (
+                <div>
+                    <img src="/images/example.jpg" alt="Example" />
+                </div>
+            );
+        }
+        ```    
+
+<br />
+#### Next.js의 Image 컴포넌트
+
+Next.js의 Image 컴포넌트는 이미지 최적화와 성능 개선을 위해 제공되는 내장 컴포넌트다.<br />
+이 컴포넌트는 이미지의 크기 조정, 포맷 변환, 레이지 로딩 등의 기능을 자동으로 처리하여 브라우저와 네트워크 성능을 최적화한다.<br />
+이미지 성능 최적화와 사용자 경험 개선을 위해 꼭 사용하는 것이 권장된다.
+
+1. 사용하는 이유
+- **자동 최적화**
+    - 이미지를 브라우저에서 더 빠르게 로드하도록 WebP 같은 최신 포맷으로 변환.
+- **반응형 지원**
+    - 다양한 해상도와 뷰포트 크기에 따라 이미지 크기를 자동으로 조정.
+- **레이지 로딩(Lazy Loading)**
+    - 사용자가 화면에 접근하기 전까지 이미지를 로드하지 않아 불필요한 리소스를 절약.
+
+2. 주요 속성
+- **src**
+    - 이미지의 경로 지정. public 디렉토리 이미지의 경우 **/** 로 시작.
+- **alt**
+    - 이미지에 대한 대체 텍스트를 제공. 접근성을 높이고 SEO에 유리.
+- **width & height**
+    - 이미지의 크기를 픽셀 단위로 지정. 크기를 명시하지 않으면 오류가 발생(단, fill 레이아웃 제외).
+- **layout**
+    - 이미지 레이아웃을 설정.
+    - intrinsic: 원본 이미지 크기에 맞춰 비율을 유지.
+    - responsive: 부모 컨테이너 크기에 따라 반응형으로 조정.
+    - fill: 부모 컨테이너를 완전히 채움.
+    - fixed: 고정 크기의 이미지.
+- **priority**
+    - true로 설정하면 페이지 로드 시 이미지를 즉시 로드한다(레이지 로딩 비활성화).
+- **placeholder**
+    - 이미지가 로드되기 전에 표시할 placeholder 설정. blur를 주로 사용하며 블러 처리된 이미지를 로딩 중에 표시한다.
+    ```javascript
+        <Image
+            src="/images/example.jpg"
+            alt="블러 이미지"
+            width={500}
+            height={300}
+            placeholder="blur"
+            blurDataURL="/images/blur-placeholder.jpg" // 저화질 이미지
+        />
+    ```
+- **onLoadingComplete**
+    - 이미지 로딩 완료 시 실행할 콜백 함수.
+    ```javascript
+        <Image
+            src="/images/example.jpg"
+            alt="Example"
+            width={500}
+            height={300}
+            onLoadingComplete={() => console.log('이미지 로드 완료')}
+        />
+    ```
+
+<br />
+#### 정리
+
+| **구분**        | **`app` 내부**                                      | **`public` 디렉토리**                       |
+|------------------|----------------------------------------------------|---------------------------------------------|
+| **용도**        | 동적/최적화된 이미지                                | 정적인 파일 (변경되지 않는 리소스)         |
+| **사용 방식**   | `Image` 컴포넌트 (`import` 방식)                   | URL 참조 (`/images/example.jpg`)            |
+| **장점**        | 최적화 제공, Lazy Loading, 자동 리사이징            | 빠르고 간단한 접근, 서버 루트 경로로 제공 |
+| **권장 상황**   | 페이지 내에서 다이나믹하게 표시될 이미지             | MDX, 메타데이터, 고정된 정적 자원 참조용  |
+
+<br />
+### 외부 이미지
+
+위에서 말한 Next.js의 **Image** 컴포넌트는 이미지 최적화(크기 조정, 포맷 변환 등)뿐만 아니라, 외부 이미지도 사용할 수 있습니다.<br />
+단 정해진 규칙이 있는데 **next.config.js(next.config.mjs)** 파일에서 remotePatterns를 추가해주어야한다.<br />
+<span className="semi-info">* next.config.js 파일은 nextjs 프로젝트를 생성하게 되면 자동으로 생성되는 애플리케이션의 전역 설정을 정의하는 파일이다. 다양한 설정을 커스터마이징하거나, 특정 기능을 활성화할 수 있다.</span>
+<p className="flex justify-center">
+    <img src="/images/next-image-src.png" alt="about-next-image-src" />
+</p>
+<a className="text-slate-400 text-center" href="https://nextjs.org/docs/pages/api-reference/components/image#remotepatterns"  target="_blank" rel="noopener noreferrer">
+    <p>출처 - Next.js 공식 문서 Image component</p>
+</a>
+
+<br />
+**remotePatterns 설정 예시**
+```javascript
+// next.config.js
+
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com', // 외부 이미지 도메인
+        port: '', // 기본 포트를 사용하는 경우 생략 가능
+        pathname: '/**', // 모든 경로 허용
+      },
+    ],
+  },
+};
+```
+**Image 컴포넌트를 이용한 외부 이미지 사용 예시**
+```javascript
+import Image from 'next/image';
+
+export default function Example() {
+  return (
+    <Image
+      src="https://example.com/image.jpg"
+      alt="외부 이미지 입니다."
+      width={500} // 원하는 너비
+      height={300} // 원하는 높이
+    />
+  );
+}
+```
