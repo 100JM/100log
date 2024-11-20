@@ -30,8 +30,9 @@ const geolocationfetcher = () => {
                 latitude: geo.coords.latitude,
                 longitude: geo.coords.longitude
             });
-        }),
-            (error: GeolocationPositionError) => rej(error);
+        },
+        (error: GeolocationPositionError) => rej(error)
+        );
     });
 };
 
