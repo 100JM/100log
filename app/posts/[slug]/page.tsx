@@ -3,6 +3,7 @@ import Contact from '@/app/components/Contact';
 import PostHeaderNav from '@/app/components/PostHeaderNav';
 import Tags from '@/app/components/Tags';
 import RelatedPost from '@/app/components/RelatedPost';
+import NextPrevPost from '@/app/components/NextPrevPost';
 
 import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -26,7 +27,7 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
             <main className="w-full h-full max-w-[1100px] m-auto flex justify-center items-center flex-col break-keep break-words">
                 <div className='w-full animate-fadeIn'>
                     <div className="w-full flex justify-center">
-                        <article className="w-full my-10 p-6 flex justify-center">
+                        <article className="w-full my-10 p-6 flex flex-col justify-center">
                             <div className="w-full">
                                 <h1 className="text-5xl mb-4">{post.title}</h1>
                                 <div className="flex flex-wrap text-lg mb-8 justify-start items-end">
@@ -44,6 +45,7 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                                     }} />
                                 </div>
                             </div>
+                            <NextPrevPost nextNprevPost={post.nextNprevPost} />
                         </article>
                         <PostHeaderNav headers={post.headers} />
                     </div>

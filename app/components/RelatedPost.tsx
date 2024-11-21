@@ -12,7 +12,7 @@ interface RelatedPostInterface {
 const RelatedPost: React.FC<RelatedPostInterface> = ({ relatedPosts, isRelated }) => {
 
     return (
-        <div className="w-full px-6 mt-40">
+        <div className="w-full px-6 mt-24">
             <div className="mb-4 text-2xl xxs:text-3xl">
                 {
                     isRelated ?

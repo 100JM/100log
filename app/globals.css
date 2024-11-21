@@ -156,6 +156,33 @@ body {
   text-align: left;
 }
 
+.prev-post-btn {
+  background-color: #f8f8f8;
+  height: 60px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.next-post-btn {
+  background-color: #f8f8f8;
+  height: 60px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: end;
+  flex-direction: row-reverse;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.dark .next-post-btn,
+.dark .prev-post-btn {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
 .fade {
   opacity: 0;
   transition: opacity 1s ease-in-out;
@@ -171,6 +198,12 @@ body {
     height: 28px;
   }
 }
+
+@media screen and (max-width: 440px) {
+  .post-contents>table {
+    font-size: 12px;
+  }
+}  
 
 @media screen and (max-width: 410px) {
   .post-time {

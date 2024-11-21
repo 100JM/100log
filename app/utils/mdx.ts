@@ -38,15 +38,15 @@ export async function getPostBySlug(slug: string): Promise<PostWithHeaders | nul
         /* 포스트 상세 페이지 header list */
         const headerList = content.split('\n').filter((line) => line.match(headerPattern)).map(h => h.replace('\r', '\n'));
 
+        const allPost = await getAllPosts();
+
         /* 연관 포스트, 없을시 가장 최근 포스트, 최대 4개 */
-        let realatedPosts = await getAllPosts().then(
-            (post) => post.filter((p) => {
-                return (
-                    p.tags.some((i) => data.tags.includes(i))
-                );
-            })
-            .filter((rp) => rp.title !== data.title).slice(0, 4)
-        );
+        let realatedPosts = allPost.filter((p) => {
+            return (
+                p.tags.some((i) => data.tags.includes(i))
+            );
+        })
+            .filter((rp) => rp.title !== data.title).slice(0, 4);
 
         let isRelated = true;
 
@@ -54,6 +54,15 @@ export async function getPostBySlug(slug: string): Promise<PostWithHeaders | nul
             realatedPosts = await getAllPosts().then((post) => post.filter((p) => p.title !== data.title).slice(0, 4));
             isRelated = false;
         }
+
+        /* 현재 포스트 인덱스 */
+        const postIndex = allPost.findIndex((i) => i.title === data.title);
+
+        /* 다음 & 이전 포스트 */
+        const nextNprevPost = {
+            next: allPost.find((_p, i) => i === (postIndex - 1)),
+            prev: allPost.find((_p, i) => i === (postIndex + 1)),
+        };
 
         return {
             title: data.title,
@@ -65,7 +74,8 @@ export async function getPostBySlug(slug: string): Promise<PostWithHeaders | nul
             thumbnail: data.thumbnail,
             headers: headerList,
             realatedPosts: realatedPosts,
-            isRelated: isRelated
+            isRelated: isRelated,
+            nextNprevPost: nextNprevPost,
         };
     } catch {
         return null;

@@ -26,4 +26,5 @@ export interface PostWithHeaders {
     headers: string[];
     realatedPosts: Post[];
     isRelated: boolean;
+    nextNprevPost: { next: Post | undefined, prev: Post | undefined}
 }
