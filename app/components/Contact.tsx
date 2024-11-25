@@ -5,7 +5,7 @@ import velogSvg from "../public/images/velog-color.svg";
 
 const Contact: React.FC = () => {
     return (
-        <div className="mt-20 w-full flex justify-center items-center">
+        <div className="my-14 w-full flex justify-center items-center">
             <a href="https://github.com/100JM" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                 <svg height={24} className="w-6 h-6 mx-2 dark:fill-[#f7f9fb]" fill="#181717" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <title>GitHub</title>

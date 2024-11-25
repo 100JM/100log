@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import rehypeSlug from 'rehype-slug';
 import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
+import GiscusComments from '@/app/components/GiscusComments';
 
 import 'prism-themes/themes/prism-vsc-dark-plus.css';
 
@@ -50,6 +51,7 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                     post.realatedPosts.length > 0 && <RelatedPost relatedPosts={post.realatedPosts} isRelated={post.isRelated} />
                 }
                 <Contact />
+                <GiscusComments slug={post.slug} />
             </div>
         </main>
     );
