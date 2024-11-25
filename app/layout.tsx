@@ -43,6 +43,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: 'https://100-log.vercel.app/',
+  }
 };
 
 export default function RootLayout({

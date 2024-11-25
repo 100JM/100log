@@ -1,6 +1,6 @@
 // next.config.mjs
 import createMDX from '@next/mdx';
-import remarkGfm from 'remark-gfm';  // GitHub Flavored Markdown 지원 (선택사항)
+import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
 /** @type {import('next').NextConfig} */
@@ -23,9 +23,27 @@ const nextConfig = {
             }
         ],
     },
-    // experimental: {
-    //     mdxRs: true
-    // },
+    async headers() {
+        return [
+            {
+                source: "/robots.txt",
+                headers: [
+                    {
+                        key: "Content-Type",
+                        value: "text/plain",
+                    },
+                ],
+            },
+        ];
+    },
+    async rewrites() {
+        return [
+            {
+                source: "/robots.txt",
+                destination: "/api/robots",
+            },
+        ];
+    },
 };
 
 const withMDX = createMDX({
@@ -38,5 +56,4 @@ const withMDX = createMDX({
     },
 });
 
-// nextConfig와 MDX 설정을 함께 내보냅니다
 export default withMDX(nextConfig);
