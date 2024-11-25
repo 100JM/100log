@@ -123,11 +123,13 @@ export async function getTagGroup(): Promise<string[]> {
         }).sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
 
     const tagArray: string[] = [];
+
     posts.map((p) => {
         p.tags.map((t: string) => {
             tagArray.push(t);
         })
-    })
+    });
+
     tagArray.unshift('All posts');
 
     return tagArray.filter((v, i) => tagArray.indexOf(v) === i);
