@@ -32,7 +32,22 @@ app라우터 방식에서 next.config.mjs를 작성할때 별 생각없이 ES모
 - next.config.mjs 같은 경우는 Node.js 모듈 시스템에서 **mjs** 확장자가 ES모듈 형식을 사용하도록 지정되기 때문에 ES모듈 형식을 사용해야한다.
 - Node.js와 빌드 도구들이 점차 ES모듈을 지원하고 있지만, 대부분의 도구들은 완전히 ES모듈로 전환되지 않았다. 따라서 여전히 js 확장자를 사용하는 방식이 널리 사용되고 있다.
 
-앞서 말했듯이 그 동안 별 다른 의심없이 사용해왔는데 이번 에러를 만난 덕분에 **왜 이런 방식으로 작성을 하는가?** 에 대해서 평소 생각해보지 않고 "다들 이렇게 하니까~" 라는 안일한 생각으로 코딩을 해왔던 스스로를 반성할 수 있는 기회였다.
+프로젝트 파일 형식을 간단하게 구분해보자면 아래와 같다.
+```csharp
+프로젝트/
+├── app/                  # ESM 사용 (import/export)
+├── lib/                  # ESM 사용 (import/export)
+├── next.config.mjs       # ESM 가능 (Next.js는 둘 다 지원)
+└── next-sitemap.config.js  # CommonJS 사용 (require/module.exports)
+```
 
+이렇게 변경해주니 정상적으로 build에 성공했다.
 
-*작성중...*
+```javascript
+const fs = require('fs');
+const path = require('path');
+const matter = require('gray-matter');
+```
+<br />
+
+앞서 말했듯이 그 동안 별 다른 의심없이 사용해왔는데 이번 에러를 만난 덕분에 **왜 이런 방식으로 작성을 하는가?** 에 대해서 평소 생각해보지 않고 *"다들 이렇게 하니까~"* 라는 안일한 생각으로 코딩을 해왔던 스스로를 반성하게됐다.
