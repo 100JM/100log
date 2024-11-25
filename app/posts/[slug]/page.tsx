@@ -1,4 +1,3 @@
-import Header from '@/app/components/Header';
 import Contact from '@/app/components/Contact';
 import PostHeaderNav from '@/app/components/PostHeaderNav';
 import Tags from '@/app/components/Tags';
@@ -22,43 +21,37 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
     }
 
     return (
-        <div>
-            <Header />
-            <main className="w-full h-full max-w-[1100px] m-auto flex justify-center items-center flex-col break-keep break-words">
-                <div className='w-full animate-fadeIn'>
-                    <div className="w-full flex justify-center">
-                        <article className="w-full my-10 p-6 flex flex-col justify-center">
-                            <div className="w-full">
-                                <h1 className="text-5xl mb-4">{post.title}</h1>
-                                <div className="flex flex-wrap text-lg mb-8 justify-start items-end">
-                                    <Tags tags={post.tags} date={post.date} />
-                                </div>
-                                <div className="post-contents">
-                                    <MDXRemote source={post.content} options={{
-                                        mdxOptions: {
-                                            remarkPlugins: [remarkGfm],
-                                            rehypePlugins: [
-                                                rehypePrism,
-                                                rehypeSlug,
-                                            ]
-                                        }
-                                    }} />
-                                </div>
+        <main className="max-w-[1100px] m-auto flex justify-center items-center flex-col break-keep break-words">
+            <div className='w-full animate-fadeIn'>
+                <div className="w-full flex justify-center">
+                    <article className="w-full my-10 p-6 flex flex-col justify-center">
+                        <div className="w-full">
+                            <h1 className="text-5xl mb-4">{post.title}</h1>
+                            <div className="flex flex-wrap text-lg mb-8 justify-start items-end">
+                                <Tags tags={post.tags} date={post.date} />
                             </div>
-                            <NextPrevPost nextNprevPost={post.nextNprevPost} />
-                        </article>
-                        <PostHeaderNav headers={post.headers} />
-                    </div>
-                    {
-                        post.realatedPosts.length > 0 && <RelatedPost relatedPosts={post.realatedPosts} isRelated={post.isRelated} />
-                    }
-                    <Contact />
+                            <div className="post-contents">
+                                <MDXRemote source={post.content} options={{
+                                    mdxOptions: {
+                                        remarkPlugins: [remarkGfm],
+                                        rehypePlugins: [
+                                            rehypePrism,
+                                            rehypeSlug,
+                                        ]
+                                    }
+                                }} />
+                            </div>
+                        </div>
+                        <NextPrevPost nextNprevPost={post.nextNprevPost} />
+                    </article>
+                    <PostHeaderNav headers={post.headers} />
                 </div>
-            </main>
-            <footer className="flex justify-center items-center w-full h-20 text-sm font-thin text-slate-400 dark:text-[#f7f9fb]">
-                © 2024. Jongmin Baek all rights reserved.
-            </footer>
-        </div>
+                {
+                    post.realatedPosts.length > 0 && <RelatedPost relatedPosts={post.realatedPosts} isRelated={post.isRelated} />
+                }
+                <Contact />
+            </div>
+        </main>
     );
 };
 

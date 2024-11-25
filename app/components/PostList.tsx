@@ -54,7 +54,7 @@ const PostList: React.FC = () => {
                 pagePosts.length > 0
                     ?
                     <AnimatePresence>
-                        <motion.div
+                        <motion.section
                             key="post-list"
                             variants={fadeVariants}
                             initial="hidden"
@@ -95,7 +95,7 @@ const PostList: React.FC = () => {
                                     );
                                 })
                             }
-                        </motion.div>
+                        </motion.section>
                     </AnimatePresence>
                     :
                     <div className="w-[90%] grid gap-9 mb-6 mlg:w-full mlg:grid-cols-2">

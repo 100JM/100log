@@ -4,9 +4,11 @@ import { ThemeProvider } from "./components/theme-provider";
 import { Do_Hyeon } from "next/font/google"
 import 'remixicon/fonts/remixicon.css';
 
+import Header from "./components/Header";
+
 const dohyeon = Do_Hyeon({
-    subsets: ['latin'],
-    weight: "400"
+  subsets: ['latin'],
+  weight: "400"
 });
 
 export const metadata: Metadata = {
@@ -58,7 +60,11 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey="blog-theme"
         >
+          <Header />
           {children}
+          <footer className="flex justify-center items-center w-full h-20 text-sm font-thin text-slate-400 dark:text-[#f7f9fb]">
+            © 2024. Jongmin Baek all rights reserved.
+          </footer>
         </ThemeProvider>
       </body>
     </html>
