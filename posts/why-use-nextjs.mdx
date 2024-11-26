@@ -1,0 +1,127 @@
+---
+title: 'Next.js - 왜 React 대신 Next.js를 사용할까? 단순히 SSR을 위해서?'
+date: '2024-11-26'
+tags: ['Next.js']
+thumbnail: '/images/next_tazza.png'
+description: 'React에서 Next.js로... 남들이 다쓰니까? 대세라서? 왜 사용하는지 제대로 알고 쓰자'
+---
+
+<img src="/images/next_tazza.png" alt="main-img" className="rounded-xl" />
+<br />
+
+## Next.js
+
+React에 이어서 현재 대세가 되어버린 Next.js, 나 또한 열심히 공부하며 토이 프로젝트에도 사용해보고있다. 현재 이용중인 이 블로그 또한 Next.js를 사용해 제작했다.<br />
+그러던 와중 어떤 프레임워크든지 얼마나 잘 다루고 어떻게 사용하는가? 보단 어떤 장점을 가진 프레임워크이고 왜 사용하는지가 더 중요하다는 생각이 들어 Next.js의 개념적인 측면을 다잡기 위해 해당 포스트를 작성하게되었다.
+<br />
+
+### What is Next.js?
+
+<p className="text-info">Next.js는 풀스택 웹 애플리케이션을 구축하기 위한 React 프레임워크입니다. 사용자 인터페이스를 만들기 위해 React Components를 사용하고, 추가 기능과 최적화를 위해 Next.js를 사용합니다.<br />
+내부적으로 Next.js는 번들링, 컴파일링 등 React에 필요한 도구를 추상화하고 자동으로 구성합니다. 이를 통해 설정에 시간을 들이지 않고 애플리케이션 구축에 집중할 수 있습니다.<br />
+<a href="https://nextjs-ko.org/docs" target="_blank" rel="noopener noreferrer"><i class="ri-link"></i>참조 - Next.js 공식 문서</a></p>
+
+쉽게 생각하지면 Next.js는 React를 사용하는 프레임워크로 Web 애플리케이션을 더 쉽게 만들고 배포할 수 있는 기능을 제공한다.<br />
+예를 들어 React는 라우팅을 위해 react router같은 여러 도구 중 하나를 선택하지만, Next.js는 내장된 기술로 파일 기반 라우팅을 지원한다.
+<br />
+#### Next.js의 주요 기능
+
+| **구분**        | **`app` 내부**                                                                                                                                        |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **라우팅**        | 레이아웃, 중첩 라우팅, 로딩 상태, 오류 처리 등을 지원하는 Server Components 기반의 파일 시스템 라우터.                                                   |
+| **렌더링**        | Client 및 Server Components를 사용한 클라이언트 및 서버 측 렌더링. Static 및 Dynamic 렌더링으로 서버에서 추가 최적화. Edge 및 Node.js 런타임에서 스트리밍. |
+| **데이터 패칭**    | Server Components에서 async/await을 사용한 간단한 데이터 가져오기와 요청 메모이제이션, 데이터 캐싱 및 재검증을 위한 확장된 fetch API.                     |
+| **스타일링**      | CSS Modules, Tailwind CSS, CSS-in-JS를 포함한 선호하는 스타일링 방법 지원.                                                                             |
+| **최적화**        | 애플리케이션의 Core Web Vitals와 사용자 경험을 향상시키기 위한 이미지, 폰트, 스크립트 최적화.                                                             |
+| **TypeScript**   | 향상된 타입 검사 및 더 효율적인 컴파일, 맞춤형 TypeScript 플러그인과 타입 검사기를 통한 TypeScript 지원 개선.                                              |
+
+<br />
+### Next.js의 장점
+
+앞서 말한 Next.js의 주요 기능들을 기반으로 장점들을 간단하게 정리해보자.
+<br />
+#### 1. 서버 사이드 렌더링 (SSR) 및 정적 사이트 생성 (SSG)
+React는 기본적으로 클라이언트 사이드 렌더링(CSR) 방식을 사용하며 Next.js는 여기에 SSR과 SSG를 추가 지원한다.
+- **SSR (Server Side Rendering):**<br />
+사용자가 페이지에 접근하기 전에 서버에서 HTML을 생성하고, 완성된 HTML을 브라우저로 전달한다.<br />
+장점: 검색 엔진 최적화(SEO), 빠른 첫 화면 로딩.
+- **SSG (Static Site Generation):**<br />
+빌드 시 HTML 파일을 생성하여 정적으로 호스팅한다.<br />
+장점: 빠른 속도와 높은 효율성.
+
+**- React와의 차이**: React로 SSR/SSG를 구현하려면 Next.js 없이 직접 설정해야 하며, 이 과정은 복잡하고 시간이 많이 걸린다. Next.js는 기본적으로 이를 간단하게 설정할 수 있도록 제공한다.
+<br />
+#### 2. 파일 기반 라우팅
+Next.js는 폴더 구조를 기반으로 라우팅을 제공한다.(13 버전 이상부턴 App router 방식)<br />
+React에서는 react-router 같은 라이브러리를 직접 설정해야 한다.
+```plaintext
+app/page.tsx                 ->  "/" (홈 페이지)
+app/about/page.tsx           ->  "/about/"
+app/posts/[id]/page.tsx      ->  "/posts/[id]" (동적 라우팅)
+app/api/user/route.ts        ->  "/api/user"   (API 라우트)
+```
+**- React와의 차이**: React에서는 라우팅을 구현하기 위해 추가적인 설정과 코드 작성이 필요하지만, Next.js는 파일 구조만으로 라우팅을 자동 처리한다.
+<br />
+#### 3. API Routes
+Next.js는 app/api 디렉토리에서 **서버리스 함수(백엔드 API)** 를 작성할 수 있는 기능을 제공한다.
+```javascript
+import { NextResponse, NextRequest } from 'next/server';
+
+export async function GET(request: NextRequest) {
+    return NextResponse.json({ message: 'Hello, world' }, { status: 200 });
+}
+```
+**- React와의 차이**: React에서는 별도의 서버(예: Express, Fastify 등)를 설정해야 하지만, Next.js는 백엔드 API를 기본적으로 지원하므로 프론트엔드와 백엔드를 하나의 프로젝트에서 관리할 수 있다.
+<br />
+#### 4. 이미지 최적화 (Next.js Image Optimization)
+Next.js는 **next/image의 Image 컴포넌트**를 통해 이미지 최적화 기능을 제공한다.<br />
+Image 컴포넌트:
+- 이미지를 다양한 해상도와 크기로 제공(반응형 이미지)
+- webp 같은 최신 포맷 지원
+- Lazy loading 적용
+
+**- React와의 차이**: React에서는 이미지 최적화를 위해 별도의 라이브러리(예: react-image, lazysizes)를 설정해야 한다.
+<br />
+#### 5. SEO 및 퍼포먼스 개선
+Next.js는 기본적으로 SEO와 성능에 유리한 구조를 제공한다.
+- **SEO:** SSR과 SSG로 초기 HTML이 완성된 상태로 전달되어, 검색 엔진 크롤러가 페이지를 더 쉽게 인식할 수 있다.
+- **퍼포먼스:** 정적 파일 제공, 자동 코드 분할, 빌드 타임 최적화를 통해 빠른 로딩 속도를 보장한다.
+
+**- React와의 차이**: React는 기본적으로 CSR만 지원하기 때문에 SEO 최적화가 어려운 반면, Next.js는 이러한 문제를 손쉽게 해결할 수 있다.
+<br />
+#### 6. 자동 번들링과 최적화
+Next.js는 빌드 시 번들 크기 최적화, 트리 쉐이킹(Tree Shaking)을 자동으로 처리한다.<br />
+<span className="semi-info">* 트리 쉐이킹(Tree Shaking): 나무 흔들기라는 뜻으로 소스코드에서는 명시되어 있지만 실제로 프로그램 실행에 영향을 주지 않는 코드들을 빌드 단계에서 제거하는 것을 의미</span>
+
+**- React와의 차이**: React에서는 Webpack, Babel 등 번들링 툴을 직접 설정해야 하지만, Next.js는 이러한 작업을 자동으로 처리해 개발자의 부담을 줄여준다.
+<br />
+#### 7. Full Stack 개발 가능
+Next.js는 API Routes, SSR, SSG 등을 통해 프론트엔드와 백엔드 기능을 한 프로젝트에서 통합할 수 있다.<br />
+React로만 구성된 프로젝트보다 **더 빠르게 MVP** 개발과 배포가 가능하다.<br />
+<span className="semi-info">* MVP: Minimum Viable Product의 약자. 구현하고자 하는 제품의 핵심적인 가치를 골라 최소한의 기능만을 담아낸 제품을 말한다.</span>
+<br />
+#### 8. Vercel과의 완벽한 통합
+Next.js는 **Vercel(Next.js 제작사)** 과 완벽히 통합되어 있으며, 버튼 클릭 몇 번으로 간단히 배포가 가능하다.
+<br />
+
+### Next.js를 사용하는 이유
+
+Next.js가 React보다 개선된 점을 정리하자면 아래와 같이 여러 항목이 있다.
+- SSR/SSG 등 기본 제공
+- 파일 기반 라우팅
+- 백엔드 API 통합
+- 이미지 최적화
+- 자동 SEO와 성능 최적화
+- 번들링 및 코드 최적화 자동화
+- 간편한 배포
+
+직접 Next.js로 작업물을 만들어 보기 전까진 Next.js를 사용하는 이유가 React에선 구현하기 힘든 **SSR** 때문이라고 생각했지만 사실 **이는 Next.js가 갖고있는 기능 중 하나일 뿐이지 Next.js를 사용하는 이유 전부가 될 순 없는 것 같다.**<br />
+내가 직접 사용해보며 느낀 가장 좋았던 Next.js의 장점은 파일 라우팅 기능이였다. 별 다른 설정 없이 폴더 구조만으로 라우팅이 된다는 점은 Next.js를 공부하기전 React를 먼저 사용해봤던 입장에서 개발에 상당한 편리함을 준다는 것을 체감했다.<br />
+
+또한 여러 개발자분들의 여러 블로그 글을 찾아보며 정독해보니 **React의 빠른 발전과 호환성 문제**도 제기되었다.<br />
+React 16버전의 hook도입과 같이 클래스형에서 함수형으로 좀더 간단하고 성능 또한 빠르게 개선되는 업데이트들은 분명 개발자 입장에서 좋겠지만, 라이브러리 호환성 문제는 React 생태계에서 개발자들이 자주 겪는 어려움 중 하나라고한다.<br />
+React와 함께 사용되는 많은 서드파티 라이브러리들은 React의 특정 버전에 의존하는 경우가 많은데, **React가 업데이트될 때 이러한 라이브러리들이 빠르게 따라잡지 못하면 호환성 문제**가 발생할 수 있다는 것이다.<br />
+Next.js는 이러한 React 생태계의 문제점을 해결하기 위해 필요한 부분들을 채워주는 프레임워크라고 볼 수 있다.<br />
+
+결론적으로 Next.js를 사용하는 이유는 단순히 SSR(Server Side Rendering)으로 개발하기 위해서가 아닌 **React 생태계의 문제점들을 해결하고 개발에 유용한 다양한 내부 기능과 렌더링 옵션을 제공하기 때문이라고 표현하면 좋을 것 같다.**
+
