@@ -23,6 +23,15 @@ const WEATHER_OBJECT: WeatherObjectInterface = {
     Thunderstorm: 'ri-flashlight-line'
 };
 
+const WEATHER_DESC_OBJECT: WeatherObjectInterface = {
+    Clear: '맑음',
+    Clouds: '흐림',
+    Rain: '비',
+    Snow: '눈',
+    Atmosphere: '안개',
+    Thunderstorm: '천둥번개'
+};
+
 const geolocationfetcher = () => {
     return new Promise<CoordinatesInterface>((res, rej) => {
         navigator.geolocation.getCurrentPosition((geo) => {
@@ -105,7 +114,7 @@ const WeatherWidget: React.FC = () => {
                 <p className="text-xs xxs:text-sm">{weatherData.address}</p>
                 <p>
                     <i className={`${WEATHER_OBJECT[weatherData.weather.main]} pr-2`}></i>
-                    <span>{`${weatherData.weather.description} ${weatherData.weather.temp}°`}</span>
+                    <span>{`${WEATHER_DESC_OBJECT[weatherData.weather.main]} ${weatherData.weather.temp}°`}</span>
                 </p>
             </motion.div>
         </AnimatePresence>
