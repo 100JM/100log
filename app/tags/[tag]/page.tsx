@@ -3,28 +3,28 @@ import PostList from "@/app/components/PostList";
 import PostPagination from "@/app/components/PostPagination";
 import TagGroup from "@/app/components/TagGroup";
 
-import { Metadata, ResolvedMetadata } from 'next';
+import { metadata } from "@/app/layout";
+import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { tag: string } }, parent: ResolvedMetadata): Promise<Metadata> {
-    const parentMetadata = await parent;
+export async function generateMetadata({ params }: { params: { tag: string } }): Promise<Metadata> {
 
     return {
-        title: `${parentMetadata.title?.absolute} - ${params.tag}`,
-        description: parentMetadata.description,
-        keywords: parentMetadata.keywords,
+        title: `${metadata.title} - ${params.tag}`,
+        description: metadata.description,
+        keywords: metadata.keywords,
         openGraph: {
-            title: `${parentMetadata.title?.absolute} - ${params.tag}`,
-            description: parentMetadata.description || '',
-            images: parentMetadata.openGraph?.images,
-            locale: parentMetadata.openGraph?.locale,
+            title: `${metadata.title} - ${params.tag}`,
+            description: metadata.description || '',
+            images: metadata.openGraph?.images,
+            locale: metadata.openGraph?.locale,
             type: 'website',
-            url: `${parentMetadata.openGraph?.url}tags/${params.tag}`,
-            siteName: parentMetadata.openGraph?.siteName
+            url: `${metadata.openGraph?.url}tags/${params.tag}`,
+            siteName: metadata.openGraph?.siteName
         },
         twitter: {
-            title: `${parentMetadata.title?.absolute} - ${params.tag}`,
-            description: parentMetadata.description || '',
-            images: parentMetadata.twitter?.images
+            title: `${metadata.title} - ${params.tag}`,
+            description: metadata.description || '',
+            images: metadata.twitter?.images
         },
     };
 }
