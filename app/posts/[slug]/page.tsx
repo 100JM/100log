@@ -4,6 +4,7 @@ import Tags from '@/app/components/Tags';
 import RelatedPost from '@/app/components/RelatedPost';
 import NextPrevPost from '@/app/components/NextPrevPost';
 
+import { Metadata, ResolvedMetadata } from 'next';
 import { getPostBySlug } from '@/app/utils/mdx';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
@@ -13,6 +14,45 @@ import remarkGfm from 'remark-gfm';
 import GiscusComments from '@/app/components/GiscusComments';
 
 import 'prism-themes/themes/prism-vsc-dark-plus.css';
+
+export async function generateMetadata({ params }: {params: { slug: string }}, parent: ResolvedMetadata): Promise<Metadata> {
+    const post = await getPostBySlug(params.slug);
+    const parentMetadata = await parent;
+
+    return {
+        title: `${post?.title} - ${parentMetadata.title?.absolute}`,
+        description: post?.description,
+        keywords: post?.tags,
+        openGraph: {
+            title: `${post?.title} - ${parentMetadata.title?.absolute}`,
+            description: post?.description,
+            images: [
+                {
+                    url: post?.thumbnail || '',
+                    alt: `${params.slug} - image`,
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+            locale: parentMetadata.openGraph?.locale,
+            type: 'website',
+            url: `${parentMetadata.openGraph?.url}posts/${params.slug}`,
+            siteName: parentMetadata.openGraph?.siteName
+        },
+        twitter: {
+            title: `${post?.title} - ${parentMetadata.title?.absolute}`,
+            description: post?.description,
+            images: [
+                {
+                    url: post?.thumbnail || '',
+                    alt: `${params.slug} - image`,
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+    };
+};
 
 const PostPage = async ({ params }: { params: { slug: string }; }) => {
     const post = await getPostBySlug(params.slug);
