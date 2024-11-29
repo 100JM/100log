@@ -19,7 +19,6 @@ const WEATHER_OBJECT: WeatherObjectInterface = {
     Clouds: 'ri-foggy-line',
     Rain: 'ri-heavy-showers-line',
     Snow: 'ri-snowflake-line',
-    Atmosphere: 'ri-mist-fill',
     Thunderstorm: 'ri-flashlight-line'
 };
 
@@ -28,7 +27,6 @@ const WEATHER_DESC_OBJECT: WeatherObjectInterface = {
     Clouds: '흐림',
     Rain: '비',
     Snow: '눈',
-    Atmosphere: '안개',
     Thunderstorm: '천둥번개'
 };
 
@@ -113,8 +111,8 @@ const WeatherWidget: React.FC = () => {
             >
                 <p className="text-xs xxs:text-sm">{weatherData.address}</p>
                 <p>
-                    <i className={`${WEATHER_OBJECT[weatherData.weather.main]} pr-2`}></i>
-                    <span>{`${WEATHER_DESC_OBJECT[weatherData.weather.main]} ${weatherData.weather.temp}°`}</span>
+                    <i className={`${WEATHER_OBJECT[weatherData.weather.main] ? WEATHER_OBJECT[weatherData.weather.main] : 'ri-mist-fill'} pr-2`}></i>
+                    <span>{`${WEATHER_DESC_OBJECT[weatherData.weather.main] ? WEATHER_DESC_OBJECT[weatherData.weather.main] : '안개'} ${weatherData.weather.temp}°`}</span>
                 </p>
             </motion.div>
         </AnimatePresence>
