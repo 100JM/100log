@@ -107,12 +107,12 @@ body {
 
 .post-contents>h3 {
   font-size: 28px;
-  margin: 30px 0;
+  margin: 30px 0 0 0;
 }
 
 .post-contents>h4 {
   font-size: 22px;
-  margin: 8px 0;
+  margin: 8px 0 0 0;
 }
 
 .post-contents>blockquote {
