@@ -130,6 +130,9 @@ body {
 .post-contents>ul {
   list-style-type: disc;
   padding-left: 20px;
+  font-size: 16px;
+  margin-top: 8px;
+  line-height: 2;
 }
 
 .post-contents>ul>li {
