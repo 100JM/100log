@@ -1,0 +1,153 @@
+---
+title: 'Next.js - API Routes, 서버리스 방식으로 백엔드 로직을 처리할 수 있는 라우팅'
+date: '2025-01-21'
+tags: ['Next.js']
+thumbnail: '/images/next.js.jpg'
+description: 'Next.js 14버전 이상에서는 API Routes가 더욱 발전된 기능과 유연성을 제공한다. API 라우터에 대한 주요 개념, 설정 방법, 그리고 추가된 주요 기능들을 살펴보자.'
+---
+
+<img src="/images/next.js.jpg" alt="main-img" className="rounded-xl" />
+<br />
+
+<p className="text-info">본 포스트는 Next.js 13버전 이상, app 라우터 방식을 기준으로 작성되었습니다. </p>
+
+## Next.js - API Routes
+
+### API Routes란?
+
+Next.js의 API Routes는 서버리스 방식으로 백엔드 로직을 처리할 수 있는 라우팅 방식이다.<br />
+각 API 경로는 파일 기반 라우팅 시스템을 사용하여 구현되고 Next.js의 페이지 디렉터리 내에서 설정 할 수 있다.
+- **파일 구조 기반:**<br />파일 이름이 API 경로가 된다.
+- **핸들러 함수:**<br />API 로직은 기본적으로 함수 형태로 작성되며 요청 메서드(GET, POST, PUT, DELETE 등)에 따라 분기한다.
+<br />
+
+### API Routes 사용 방법
+
+API Routes는 기본적으로 **/app/api** 또는 **/pages/api** 디렉터리 안에 정의된다.
+<br />
+
+#### 파일 구조
+```csharp
+project/
+├── app/
+│   ├── api/
+│   │   └── my-api/          # 요청 경로로 쓰일 폴더 명
+│   │       └── route.ts     # API Route 파일
+```
+
+#### 핸들러 함수 작성
+
+Next.js 14 이상에서는 **route.ts(route.js)** 파일 안에 API 로직을 정의한다.
+```javascript
+import { NextResponse, NextRequest } from 'next/server';
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
+    try {
+        const resultData = 'API 로직...'
+
+        return NextResponse.json(resultData);
+    } catch (error) {
+        console.error('api error:', error);
+        return NextResponse.json({ error: 'fetch api was failed' }, { status: 500 });
+    }
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    const formData = await request.formData();
+    const id = formData.get('id');
+    
+    if (!id) {
+        return NextResponse.json({ error: 'id is required' }, { status: 200 });
+    }
+
+    try {
+        // API 로직...
+    
+        return NextResponse.json({ status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: error }, { status: 500 });
+    }
+};
+```
+<br />
+
+### 주요 특징
+
+#### 1. 파일 기반 라우팅
+- API 라우트는 **route.ts(route.js)** 파일로 구현되며, 디렉터리 구조가 곧 URL 경로가 된다.<br />
+예: app/api/user/route.ts → /api/user
+
+#### 2. Request와 Response 객체
+- **Request:**<br />
+표준 Web API Request 객체를 활용하여 요청 데이터를 쉽게 처리할 수 있다.
+- **Response:**<br />
+표준 Web API Response 객체를 사용하여 응답을 반환한다.
+```javascript
+export async function POST(request) {
+  const data = await request.json(); //Request
+  console.log(data);
+
+  return new Response(JSON.stringify({ success: true }), { status: 200 }); //Response
+}
+```
+
+#### 3. Edge 및 서버 실행 환경 지원
+Next.js 14에서는 API 라우트를 Edge Runtime에서 실행하거나, Node.js 환경에서 실행할 수 있다.
+- **Edge Runtime 사용:**<br />
+빠른 응답을 요구하는 API에 적합
+- **Node.js 환경 사용:**<br />
+기존 Node.js 모듈 활용 가능
+```javascript
+export const runtime = 'edge';
+
+export const runtime = 'nodejs';
+```
+
+#### 4. 다이나믹 API Routes
+파일 및 폴더 이름에 대괄호[]를 사용하여 동적 라우팅을 구현합니다.<br />
+URL 예시: /api/user/123 → userId: "123"
+```csharp
+project/
+├── app/
+│   ├── api/
+│   │   └── user/
+│   │       └── [id]
+│   │            └── route.ts
+```
+```javascript
+// app/api/user/[id]/route.js
+export async function GET(request, { params }) {
+  const { id } = params;
+  return new Response(JSON.stringify({ userId: id }), { status: 200 });
+}
+```
+<br />
+
+### Middleware
+Next.js 14에서는 Middleware를 활용하여 API 요청을 처리하기 전에 인증, 로깅 등의 작업을 할 수 있다.
+```javascript
+// middleware.js
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  const token = request.headers.get('Authorization');
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: '/api/:path*', // 특정 API 경로에만 적용
+};
+```
+<br />
+
+### 주요 장점
+
+- **서버리스 환경:**<br />
+API가 요청에 따라 실행되므로 효율적인 비용
+- **확정성:**<br />
+기존 백엔드 없이도 간단한 API를 쉽게 구현 가능
+- **보안:**<br />
+클라이언트와 분리되어 민감한 로직 보호 가능
