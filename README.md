@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+💻 프로젝트 소개
+---
+<img src="/public/images/openGraph_image.jpg" width="60%" />
 
-## Getting Started
+- 개발 블로그
+- 모바일 최적화
+- Next.js
+- Vercel 배포 도메인: https://100-log.vercel.app
 
-First, run the development server:
+🔍 기능
+---
+1. 주요 기능
+- 전체 & 카테고리별 게시글 목록
+- 게시글 상세 페이지
+- 댓글 기능
+2. 부가 기능
+- 최근 게시글 고정
+- 목차(사이드 바)
+- 라이트 & 다크 모드
+- 현 위치 날씨 정보
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🛠️ 기술 스택
+---
+- Framework: Next.js(14)
+- Design: Tailwind css & Remix icon
+- 게시글 관련: MDX(작성) & gray-matter, next-mdx-remote(파싱)
+- 댓글: Giscus
+- 날씨 정보: Openweathermap api
+- 상태 관리: SWR & Zustand
