@@ -187,6 +187,16 @@ body {
   color: #fff;
 }
 
+.home-btn {
+  background-color: #f8f8f8;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+.dark .home-btn {
+  background-color: #1e1e1e;
+}
+
 .fade {
   opacity: 0;
   transition: opacity 1s ease-in-out;
