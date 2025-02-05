@@ -1,18 +1,17 @@
 'use client';
 
-import { useState } from "react";
-
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const HeaderPageButton: React.FC = () => {
-    const [selectedPage, setSelectedPage] = useState<string>('home');
+    const pathName = usePathname();
 
     return (
         <div className="p-2 flex items-center gap-4">
-            <Link className={`text-lg hover:underline ${selectedPage === 'home' ? 'home-btn' : ''}`} href="/" onClick={() => setSelectedPage('home')}>
+            <Link className={`text-lg hover:underline ${pathName === '/' ? 'home-btn' : ''}`} href="/">
                 <p>100log</p>
             </Link>
-            <Link className={`text-lg hover:underline ${selectedPage === 'about' ? 'home-btn' : ''}`} href="/about/me" onClick={() => setSelectedPage('about')}>
+            <Link className={`text-lg hover:underline ${pathName === '/about' ? 'home-btn' : ''}`} href="/about">
                 <p>About</p>
             </Link>
         </div>

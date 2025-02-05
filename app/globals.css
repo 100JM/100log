@@ -206,6 +206,15 @@ body {
   opacity: 1;
 }
 
+.work-experience-ul {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
+.work-experience-ul>li:not(:last-child) {
+  margin-bottom: 8px;
+}
+
 @media screen and (max-width: 640px) {
   .page-link {
     width: 28px;
