@@ -55,7 +55,7 @@ const PostPagination: React.FC = () => {
                                 </PaginationLink>
                             </PaginationItem>
                         ))}
-                        {!(currentPage >= (totalPages -2)) && totalPages >= 5 &&
+                        {!(currentPage >= (totalPages -2)) && totalPages > 5 &&
                             <PaginationItem>
                                 <PaginationEllipsis />
                             </PaginationItem>
