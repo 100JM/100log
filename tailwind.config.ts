@@ -59,6 +59,7 @@ const config: Config = {
 			screens: {
 				xxl: '1200px',
 				mlg: '960px',
+				xs: '430px',
 				xxs: '390px'
 			},
 			animation: {

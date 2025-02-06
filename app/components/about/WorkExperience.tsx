@@ -1,15 +1,15 @@
 const WorkExperience = () => {
     return (
         <div className="w-full text-start flex flex-col gap-y-2 mb-12">
-            <p className="text-3xl font-bold">Work Experience</p>
-            <div className="border border-slate-300 p-4 rounded-md flex flex-col gap-y-4">
+            <p className="text-2xl font-bold sm:text-3xl">Work Experience</p>
+            <div className="border border-slate-300 p-4 rounded-md flex flex-col gap-y-3">
                 <div className="sm:flex sm:justify-between sm:items-center">
                     <p className="text-lg font-semibold">RSOne soft</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">2023.04 ~ Present</p>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">공공기관 및 민간부분의 GIS 서비스 플랫폼 구축 기업</p>
             </div>
-            <div className="border border-slate-300 p-4 rounded-md flex flex-col gap-y-4">
+            <div className="border border-slate-300 p-4 rounded-md flex flex-col gap-y-3">
                 <div className="sm:flex sm:justify-between sm:items-center">
                     <p className="text-lg font-semibold">지오투정보기술</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">2021.09 ~ 2022.08</p>

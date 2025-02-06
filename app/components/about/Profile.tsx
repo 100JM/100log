@@ -5,7 +5,7 @@ const Profile = () => {
     return (
         <div className="w-full flex flex-col-reverse gap-y-2 items-center text-center pt-20 mb-12 sm:items-start sm:justify-between sm:flex-row sm:text-start">
             <div className="flex flex-col gap-y-2">
-                <p className="text-3xl font-bold">백종민</p>
+                <p className="text-2xl font-bold sm:text-3xl">백종민</p>
                 <div className="text-gray-600 dark:text-gray-400 text-sm">
                     <p>항상 노력하는 꼼꼼한 프론트앤드 개발자가 되려합니다.</p>
                     <p className="flex items-center justify-center gap-x-1 sm:justify-start">
