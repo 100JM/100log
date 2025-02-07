@@ -65,7 +65,6 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
             © 2024. Jongmin Baek all rights reserved.
           </footer>
         </ThemeProvider>
-        <div id="modal"></div>
       </body>
     </html>
   );
