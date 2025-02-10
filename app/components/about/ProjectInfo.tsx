@@ -86,12 +86,11 @@ const ProjectInfo = () => {
                                                         )
                                                     } else {
                                                         return (
-                                                            <div className="flex mb-4" key={l.toString()}>
+                                                            <div className="flex gap-x-1 mb-4" key={l.toString()}>
                                                                 {
                                                                     l.map((img) =>
-                                                                        <Zoom zoomMargin={40}>
+                                                                        <Zoom zoomMargin={40} key={img}>
                                                                             <img
-                                                                                key={img}
                                                                                 src={img.replace('image-', '')}
                                                                                 alt={img}
                                                                                 className="rounded-md"
