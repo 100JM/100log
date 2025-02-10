@@ -215,10 +215,18 @@ body {
   margin-bottom: 8px;
 }
 
+.project-info-dialog-title,
 .project-info-dialog {
-  font-family: "Nanum Gothic Coding", monospace !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
+  font-family: "Nanum Gothic Coding", monospace;
+  /* font-weight: 400;
+  font-style: normal; */
+}
+
+.dark .project-info-dialog-title,
+.dark .project-info-dialog-content {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--border));
 }
 
 *::-webkit-scrollbar:horizontal {
