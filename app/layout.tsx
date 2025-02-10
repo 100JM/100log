@@ -61,7 +61,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         >
           <Header />
           {children}
-          <footer className="flex justify-center items-center w-full h-20 text-sm font-thin text-slate-400 dark:text-[#f7f9fb]">
+          <footer className="flex justify-center items-center w-full h-20 text-sm">
             © 2024. Jongmin Baek all rights reserved.
           </footer>
         </ThemeProvider>
