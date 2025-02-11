@@ -7,7 +7,7 @@ import ProjectInfo from "../components/about/ProjectInfo";
 export default function AboutPage() {
 
     return (
-        <main className="max-w-[670px] px-6 m-auto flex justify-center items-center flex-col break-keep break-words post-contents md:px-0">
+        <main className="max-w-[670px] px-6 m-auto flex justify-center items-center flex-col break-keep break-words post-contents md:px-0 animate-fadeIn">
                 <Profile />
                 <ItemDiv
                     title='About'

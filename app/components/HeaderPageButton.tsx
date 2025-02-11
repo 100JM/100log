@@ -8,7 +8,7 @@ const HeaderPageButton: React.FC = () => {
 
     return (
         <div className="p-2 flex items-center gap-4">
-            <Link className={`text-lg hover:underline ${pathName === '/' ? 'home-btn' : ''}`} href="/">
+            <Link className={`text-lg hover:underline ${pathName === '/about' ? '' : 'home-btn'}`} href="/">
                 <p>100log</p>
             </Link>
             <Link className={`text-lg hover:underline ${pathName === '/about' ? 'home-btn' : ''}`} href="/about">
