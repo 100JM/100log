@@ -49,7 +49,24 @@ export const projects = [
                 content: [
                     '개인 일정 관리 캘린더 웹 애플리케이션',
                     '카카오 & 구글 로그인 지원',
+                    '카카오 & open street map 주소 검색',
                     '모바일 최적화(반응형 디자인)',
+                ]
+            },
+            {
+                subject: 'Stack',
+                content: ['Next.js(14)', 'Tailwind css', 'MUI', 'SWR', 'Zustand', 'NextAuth.js', 'FullCalendar']
+            },
+            {
+                subject: '기능',
+                content: [
+                    '카카오 or 구글 계정으로 로그인',
+                    '캘린더 기반 화면, 사용자 별 등록된 일정 정보',
+                    ['image-/project_images/todocalendar_img.gif', 'image-/project_images/todocalendar_img_2.gif',],
+                    '일정 등록, 수정, 삭제',
+                    '전체 일정 & 중요 일정 목록',
+                    '일정 검색',
+                    ['image-/project_images/todocalendar_img_3.gif', 'image-/project_images/todocalendar_img_4.gif',],
                 ]
             },
         ]

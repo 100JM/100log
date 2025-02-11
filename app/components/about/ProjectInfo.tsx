@@ -106,7 +106,7 @@ const ProjectInfo = () => {
                                         }
                                     </ul>
                                     :
-                                    <div className="bg-gray-200 p-2 rounded-md dark:bg-gray-500">
+                                    <div className="text-sm bg-gray-200 p-2 rounded-md dark:bg-gray-500">
                                         {
                                             c.content.map((l, i) => {
                                                 return (
