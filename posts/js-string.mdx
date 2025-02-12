@@ -1,0 +1,39 @@
+---
+title: 'Javascript - String'
+date: '2024-11-03'
+tags: ['Javascript']
+thumbnail: '/images/javascript_simpson.png'
+description: '기호의 순차 수열이라 불리는 자바스크립트의 문자열 String'
+---
+
+<img src="/images/javascript_simpson.png" alt="main-img" className="rounded-xl" />
+<br />
+
+## String
+
+JavaScript에서 String은 문자열을 의미한다.<br />
+컴퓨터 프로그래밍 언어 이론에서는 기호의 순차 수열이라고 불린다.
+
+### 문자열 선언
+
+Javascript 문자열을 선언하는 방법은 3가지가 있다.
+
+1. 문자열 리터럴<br />
+작은 따옴표 또는 큰 따옴표로 문자열 리터럴을 생성한다.
+```javascript
+    const str = '문자열';
+    const text = "text";
+```
+
+2. String 객체
+```javascript
+    const strObj = new String('str'); // 문자열 객체
+    const text = String(123); // '123'
+```
+
+3. 템플릿 리터럴<br />
+내장된 표현식을 사용하는 문자열 리터럴, 백틱(``)으로 감싸준다.
+```javascript
+    const template_literals = 'template_literals';
+    const template_literals_string = `${template_literals}_string`; // 'template_literals_string'
+```
