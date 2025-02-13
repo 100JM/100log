@@ -1,9 +1,9 @@
 ---
-title: 'Javascript - String'
+title: 'Javascript - String(Template literals)'
 date: '2024-11-03'
 tags: ['Javascript']
 thumbnail: '/images/javascript_simpson.png'
-description: '기호의 순차 수열이라 불리는 자바스크립트의 문자열 String'
+description: '기호의 순차 수열이라 불리는 자바스크립트의 문자열 String과 템플릿 리터럴(Template literals)'
 ---
 
 <img src="/images/javascript_simpson.png" alt="main-img" className="rounded-xl" />
@@ -13,6 +13,7 @@ description: '기호의 순차 수열이라 불리는 자바스크립트의 문�
 
 JavaScript에서 String은 문자열을 의미한다.<br />
 컴퓨터 프로그래밍 언어 이론에서는 기호의 순차 수열이라고 불린다.
+<br />
 
 ### 문자열 선언
 
@@ -36,4 +37,162 @@ Javascript 문자열을 선언하는 방법은 3가지가 있다.
 ```javascript
     const template_literals = 'template_literals';
     const template_literals_string = `${template_literals}_string`; // 'template_literals_string'
+```
+<br />
+
+### Template literals
+
+템플릿 리터럴이란 내장된 표현식을 허용하는 문자열 리터럴로 표현식&문자열 삽입, 여러 줄 문자열, 문자열 형식화, 문자열 태깅 등 다양한 기능을 제공한다.<br />
+**백틱(``)** 을 사용하여 문자열을 생성하며 기존의 문자열 생성 방식보다 가독성이 좋고, 문자열 내부에서 변수를 쉽게 삽입할 수 있다.
+<br />
+
+#### 기본 문법
+- 백틱(``)으로 문자열을 감싼다.
+- ${}(템플릿 자리표시)안에 변수를 넣으면 자동으로 문자열 내에 삽입된다.
+
+```javascript
+    const name = '스파이더맨';
+    console.log(`저는 ${name}입니다.`); // '저는 스파이더맨입니다.'
+```
+
+#### 표현식 삽입
+- ${} 안에서는 단순 변수뿐만 아니라 **표현식(연산, 함수 호출 등)** 도 사용할 수 있다.
+```javascript
+const a = 10;
+const b = 20;
+
+console.log(`${a + b}`); // 30
+console.log(`현재 시간: ${new Date().toLocaleTimeString()}`); // '현재 시간: 오전 11:14:07'
+```
+
+#### 여러 줄 문자열
+- 백틱을 사용하면 줄바꿈(개행)을 직접 입력 가능하며, \n을 사용할 필요가 없다.
+```javascript
+const muiltiline_string = `저는
+스파이더맨
+입니다.`;
+
+console.log(muiltiline_string);
+
+/*
+저는
+스파이더맨
+입니다.
+*/
+```
+
+#### 중첩 템플릿 리터럴
+- 템플릿 리터럴을 중첩해서 사용할 수 있다.
+```javascript
+const user = {
+  name: 'BJM',
+  age: '31',
+  gender: 'man'
+};
+
+const info = `이름: ${user.name}
+나이: ${user.age}세
+성별: ${user.gender === 'man' ? '남성' : '여성'}
+`;
+
+console.log(info);
+
+/*
+이름: BJM
+나이: 31세
+성별: 남성
+*/
+```
+<br />
+
+### String 메소드
+변수 또는 객체 프로퍼티가 문자열을 값으로 가지고 있다면 String 객체의 별도 생성없이 프로퍼티와 메소드를 사용할 수 있다.
+<br />
+
+#### toUpperCase() / toLowerCase()
+- 문자가 영어일 경우 대소문자 변환이 가능하다.
+```javascript
+let intro  = 'Hi my name is Tom Holland';
+
+intro.toUpperCase(); // 'HI MY NAME IS TOM HOLLAND'
+intro.toLowerCase(); // 'hi my name is tom holland'
+
+let name = '피터 Parker';
+
+name.toUpperCase(); // '피터 PARKER'
+```
+
+#### indexOf
+- 문자를 인수로 받아 해당 위치를 반환한다.<br />
+문자가 여러 개일 경우 첫 번째 문자의 위치만 반환하며 문자가 존재하지 않을 경우 -1을 반환한다.<br />
+주의할 점으로 대소문자를 구분하기 때문에 구분 없이 찾고 싶다면 **toUpperCase** 혹은 **toLowerCase**를 활용하자.
+- indexOf와 비슷한 기능으로 **includes가 있으며 true / false를 반환**한다.
+```javascript
+let job = 'Spider-Man';
+
+job.indexOf('Man'); // 7
+job.indexOf('man'); // -1
+job.toLowerCase().indexOf('man'); // 7
+
+job.includes('Man'); // true
+```
+
+#### slice(n, m)
+- n(시작점)부터 m까지(포함하지 않음) 문자를 반환한다.<br />
+m(두 번째 인자)가 없으면 문자열 끝까지, 음수이면 끝에서부터 세어 반환한다.
+```javascript
+let text = 'abcdefg';
+
+text.slice(2); // 'cdefg'
+text.slice(0,5); // 'abcde'
+text.slice(2,-2); // 'cde'
+```
+
+#### substring(n, m)
+- n과 m사이에 위치하고 있는 문자를 반환한다.<br />
+n과 m이 바뀌어도 동작하며 음수는 허용하지 않는다.(0으로 인식)
+```javascript
+let text = 'abcdefg';
+
+text.substring(2, 5); // 'cde'
+text.substring(5, 2); // 'cde'
+```
+
+#### substr(n, m)
+- n부터 m개를 반환한다.
+```javascript
+let text = 'abcdefg';
+
+text.substr(2, 5); // 'cdefg'
+text.substr(-5, 2); // 'cd'
+```
+
+#### trim()
+- 앞뒤 공백을 제거해준다.<br />
+의도적으로 앞뒤에 공백을 넣는 경우는 거의 없기 때문에 보통 사용자로부터 뭔가를(검색어 등) 입력 받을 때 사용한다.
+```javascript
+let coding = ' coding is fun ';
+
+coding.trim(); // 'coding is fun'
+```
+
+#### repeat(n)
+- 해당 문자열을 n번 반복한다.
+```javascript
+let desc = '아이고 난! ';
+
+desc.repeat(3); // '아이고 난! 아이고 난! 아이고 난! '
+```
+
+#### replace() & replaceAll()
+- replace()와 replaceAll()은 문자열에서 특정 패턴을 찾아 다른 문자열로 변경한다.
+- replace(): 첫 번째 매칭된 값만 변경
+- replaceAll(): 모든 매칭된 값을 변경
+- replace()도 정규식(/g)을 사용하여 모든 매칭 값을 변경할 수 있다.
+```javascript
+let str = 'yes no yes no';
+
+str.replace('no', 'yes'); // 'yes yes yes no'
+str.replaceAll('no', 'yes'); // 'yes yes yes yes'
+str.replace(/no/g, 'yes'); // 'yes yes yes yes'
 ```
