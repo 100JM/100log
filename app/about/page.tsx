@@ -22,6 +22,7 @@ export default function AboutPage() {
                             <p className="bg-slate-400 p-1 rounded-md">Next.js</p>
                             <p className="bg-slate-400 p-1 rounded-md">React.js</p>
                             <p className="bg-slate-400 p-1 rounded-md">jQuery</p>
+                            <p className="bg-slate-400 p-1 rounded-md">SQL(PostgreSQL, MySQL)</p>
                         </div>
                     }
                 />
