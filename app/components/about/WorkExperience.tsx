@@ -18,7 +18,7 @@ const WorkExperience = () => {
                     <p className="font-semibold leading-6">충남 공간정보플랫폼</p>
                     <ul className="work-experience-ul text-gray-600 dark:text-gray-400">
                         <li>전체적인 로직 개선</li>
-                        <li>VWORLD API를 활용한 지도(레이어) 서비스 제공</li>
+                        <li>VWORLD API & 공공데이터포털 API를 활용한 지도(레이어) 서비스 제공</li>
                         <li>부동산 실거래가 데이터 조회</li>
                         <li>TAGO API를 활용한 실시간 버스 정보 조회</li>
                         <li>파일 데이터를 읽어 지도에 시각화(레이어) & 시각화된 레이어 스타일 변경</li>

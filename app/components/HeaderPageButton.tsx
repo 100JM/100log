@@ -7,11 +7,11 @@ const HeaderPageButton: React.FC = () => {
     const pathName = usePathname();
 
     return (
-        <div className="p-2 flex items-center gap-4">
-            <Link className={`text-lg hover:underline ${pathName === '/about' ? '' : 'home-btn'}`} href="/">
+        <div className="flex items-center gap-4">
+            <Link className={`text-base hover:underline py-1 px-2 sm:text-lg ${pathName === '/about' ? '' : 'home-btn'}`} href="/">
                 <p>100log</p>
             </Link>
-            <Link className={`text-lg hover:underline ${pathName === '/about' ? 'home-btn' : ''}`} href="/about">
+            <Link className={`text-base hover:underline py-1 px-2 sm:text-lg ${pathName === '/about' ? 'home-btn' : ''}`} href="/about">
                 <p>About</p>
             </Link>
         </div>
