@@ -146,11 +146,7 @@ body {
 }
 
 .post-contents>table>thead {
-  background-color: #f9f9f9;
-}
-
-.dark .post-contents>table>thead {
-  background-color: #1e1e1e;
+  background-color: hsl(var(--muted));
 }
 
 .post-contents>table>tbody>tr>td,
@@ -181,21 +177,11 @@ body {
   border-radius: 0.5rem;
 }
 
-/* .dark .next-post-btn,
-.dark .prev-post-btn {
-  background-color: #1e1e1e;
-  color: #fff;
-} */
-
 .home-btn {
   background-color: #eee;
   background-color: hsl(var(--muted));
   border-radius: 9999px;
 }
-
-/* .dark .home-btn {
-  background-color: #1e1e1e;
-} */
 
 .fade {
   opacity: 0;
