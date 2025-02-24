@@ -83,6 +83,12 @@ body {
   background-color: #e5f5fd;
 }
 
+.text-info-link {
+  font-weight: bold;
+  color: black;
+  text-decoration-line: underline;
+}
+
 .semi-info {
   font-size: 14px;
   color: rgb(100 116 139);
@@ -111,7 +117,7 @@ body {
 }
 
 .post-contents>h4 {
-  font-size: 22px;
+  font-size: 20px;
   margin: 8px 0 0 0;
 }
 
