@@ -94,6 +94,10 @@ body {
   color: rgb(100 116 139);
 }
 
+.text-info-color {
+  color: #3182ce;
+}
+
 .post-contents>p {
   font-size: 16px;
   margin-top: 16px;
