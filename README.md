@@ -10,22 +10,22 @@
 
 🔍 계기
 ---
-이미 많은 블로그 플랫폼이 서비스하고 있지만 이를 사용하지 않고 직접 제작하게 된 이유는 간단하다.
+여러 블로그 플랫폼들이 서비스하고 있지만 이를 사용하지 않고 직접 제작하게 된 이유는 간단하다.
 
 #### 1. 커스텀 디자인
-<p style={{marginTop: "8px"}}>평소 간결하고 깔끔한 디자인을 선호하는 편인데 원하는 대로 커스터마이징 할 수 있다는게 좋았다.<br /> 물론 서비스중인 블로그들도 커스터마이징이 가능하지만 좀 더 완벽하게 나만의 취향이 들어간 디자인을 만들고 싶었다.</p>
+평소 간결하고 깔끔한 디자인을 선호하는 편인데 원하는 대로 커스터마이징 할 수 있다는게 좋았다.<br /> 물론 서비스중인 블로그들도 커스터마이징이 가능하지만 좀 더 완벽하게 나만의 취향이 들어간 디자인을 만들고 싶었다.
 
 #### 2. 애정
-<p style={{marginTop: "8px"}}>내가 직접 만든 블로그이기에 다른 서비스들보다 더 애정을 갖고 꾸준히 작성하게 되지 않을까? 라는 생각이 들었는데 정말 애정을 갖고 관리하게 되었다.</p>
+내가 직접 만든 블로그이기에 다른 서비스들보다 더 애정을 갖고 꾸준히 작성하게 되지 않을까? 라는 생각이 들었는데 정말 애정을 갖고 관리하게 되었다.
 
 #### 3. FE 개발자
-<p style={{marginTop: "8px"}}>FE 개발자로 성장하고 싶은 나에게 스터디 겸 또 하나의 작업물이 될 수 있다는게 장점이다.<br /> 요새 개발자라면 직접 만든 블로그나 사이트 하나씩은 갖고 있던데, 나만 빠지면 섭하잖아요?</p>
+FE 개발자로 성장하고 싶은 나에게 스터디 겸 또 하나의 작업물이 될 수 있다는게 장점이다.<br /> 요새 개발자라면 직접 만든 블로그나 사이트 하나씩은 갖고 있던데, 나만 빠지면 섭하잖아요?
+<br />
 <br />
 
 💻 과정
 ---
-
-이미 많은 분들이 Next.js 기반 블로그를 만들었고 레퍼런스를 공유해주셔서 관련 정보들을 찾아보고 참고하며 stack 및 기능들을 정했다.
+이미 많은 분들이 Next.js 기반 블로그를 만들었고 레퍼런스를 공유해주셔서 참고하여 stack 및 기능들을 정했다.
 
 #### 1. 기능 정리
 
@@ -44,35 +44,35 @@
 
 #### 2. 기술 스택
 
-- **Framework: <span className="text-info-color">Next.js(14)</span>**<br />
+- **Framework: Next.js(14)** <br />
 프론트앤드 개발자라면 현재 필수라고 여겨지는 프레임워크인 것 같다.<br />
 Next.js를 사용하는 회사도 늘어나고 있고 이번 기회에 Next.js에 대해 공부도하고 친해질 수 있는 기회라고 생각해 선택했다.
 
-- **Design: <span className="text-info-color">Tailwind css & MUI</span>**<br/>
+- **Design: Tailwind css & MUI** <br/>
 핫한 디자인 라이브러리 Tailwind css, 처음엔 어색했지만 Tailwind css를 기반으로 작성한 전역 스타일을 혼합하여 사용하니 정말 편리하다고 느꼈다.<br />
 추가로 간단하게 import하여 사용할 수 있는 MUI(Material-UI)를 사용해 Dialog와 같은 컴포넌트를 구현했다.<br />
-<span className="semi-info">* MUI: 구글의 디자인 철학인 Material Design 원칙을 기반으로 한 React UI 라이브러리</span>
+*※ MUI: 구글의 디자인 철학인 Material Design 원칙을 기반으로 한 React UI 라이브러리*
 
-- **게시글 관련: <span className="text-info-color">MDX(작성) & gray-matter, next-mdx-remote(파싱)</span>**<br />
+- **게시글 관련: MDX(작성) & gray-matter, next-mdx-remote(파싱)** <br />
 _**gray-matter:** Markdown 파일에서 제목, 날짜, 태그 등의 메타데이터 추출_<br />
 _**next-mdx-remote:** 메타데이터와 콘텐츠를 분리한 후 콘텐츠를 HTML과 React 컴포넌트로 변환_<br />
 mdx(Markdown with jsx)로 작성된 파일의 메타 정보와 본문을 파싱해주는 gray-matter, next-mdx-remote를 사용했다.<br />
 처음 접해보는 라이브러리지만 Next.js나 Markdown 기반 콘텐츠를 다루는 프로젝트에서 자주 사용되어 관련 정보를 쉽게 찾아볼 수 있었다.<br />
 
-- **댓글: <span className="text-info-color">Giscus</span>**<br />
+- **댓글: Giscus** <br />
 Github Discussions를 사용해서 댓글 시스템을 구현할 수 있게 해주는 라이브러리다.<br />
 오픈 소스스에 데이터베이스도 필요 없고 간단하게 댓글 기능을 구현할 수 있었다.  
 
-- **날씨 정보: <span className="text-info-color">Openweathermap api</span>**<br />
+- **날씨 정보: Openweathermap api** <br />
 Openweathermap api를 사용해 현재 위치의 날씨 정보를 구현했다.<br />
 부분적 무료이지만 무료버전을 사용해도 무리가 없을거라 생각해 선택했다.
 
-- **상태 관리: <span className="text-info-color">SWR & Zustand</span>**<br />
+- **상태 관리: SWR & Zustand** <br />
 SWR은 자동 캐싱 및 재검증이 가능하고 에러 핸들링 시 재시도 로직과 같은 기능들이 쉽게 구현이 가능하여 선택했다.<br />
 Zustand 또한 간결하고 직관적이며 보일러플레이트 없이 전역 상태를 쉽게 관리할 수 있다.<br />
-<span className="semi-info">* 보일러플레이트: 애플리케이션의 핵심 로직과 크게 관련 없는, 반복적이고 템플릿처럼 사용되는 코드</span>
+*※ 보일러플레이트: 애플리케이션의 핵심 로직과 크게 관련 없는, 반복적이고 템플릿처럼 사용되는 코드*
 
-- **배포: <span className="text-info-color">Vercel</span>**<br />
+- **배포: Vercel** <br />
 Vercel은 Next.js 개발 팀에서 만든 호스팅 서비스다.<br />
 Github Repository와 연동하면 매번 push를 진행할 때 마다 자동으로 빌드 후 배포해주기 때문에 관리가 편하다.
 
