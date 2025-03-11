@@ -1,0 +1,92 @@
+---
+title: '브라우저는 어떻게 렌더링 할까?'
+date: '2025-03-11'
+tags: ['Front-end']
+thumbnail: '/images/frontend-browser.png'
+description: '웹페이지를 표시한다는 것, 브라우저는 어떻게 동작하는가?'
+---
+
+<img src="/images/frontend-browser.png" alt="main-img" className="rounded-xl" />
+<br />
+
+## 브라우저 구조 및 렌더링 엔진 작동 원리
+
+웹 브라우저는 단순히 HTML을 보여주는 도구가 아니라 복잡한 소프트웨어로 구성되어 있다.<br />
+브라우저는 여러 핵심 컴포넌트가 상호하며 웹페이지를 렌더링한다.
+<br />
+
+### 브라우저의 주요 구성 요소
+브라우저는 다음과 같은 핵심 컴포넌트로 구성된다.
+
+####  1. User Interface (UI)
+- 사용자가 보는 브라우저의 화면 요소
+- 주소창, 이전/다음 버튼, 북마크, 메뉴 등
+<br />
+
+#### 2. Browser Engine(브라우저 엔진)
+- UI와 렌더링 엔진 간의 중재자 역할
+- 사용자의 요청을 렌더링 엔진에 전달하고 결과를 다시 UI에 표시한다.
+<br />
+
+#### 3. Rendering Engine(렌더링 엔진)
+- HTML, CSS, JavaScript 등을 해석해 화면에 표시하는 핵심 엔진
+- 브라우저에 따라 렌더링 엔진이 다름<br />
+Blink - 크롬, 엣지<br />
+Webkit - 사파리<br />
+Gecko - 파이어폭스
+<br />
+
+#### 4 Networking(네트워킹)
+- HTTP/HTTPS 프로토콜을 통해 서버에서 리소스를 가져오는 모듈
+- 브라우저 캐시와 프록시 설정을 관리한다.
+<br />
+
+#### 5. JavaScript Engine(자바스크립트 엔진)
+- 자바스크립트 코드를 해석하고 실행한다.
+- 유명한 자바스크립트 엔진:<br />
+V8(크롬, 엣지)<br />
+SpiderMonkey(파이어폭스)<br />
+JavaScriptCore(사파리)
+<br />
+
+#### 6. Data Storage(데이터 저장소)
+- 쿠키, IndexedDB, WebSQL, LocalStorage, Cache Storage 등을 관리한다.
+<br />
+
+#### 7. UI Backend(UI 백앤드)
+- 브라우저 UI 렌더링을 처리한다.
+- 버튼, 선택 창 등 네이티브 인터페이스 요소를 그리는 역할을 한다.
+<br />
+
+### 브라우저 렌더링 과정
+렌더링 핵심 과정은 다음과 같다.
+
+#### 1. HTML 파싱
+- HTML 문서를 파싱해 DOM(Document Object Model) 생성
+- DOM은 HTML의 계층 구조를 객체 모델로 표현한 구조이다.
+<br />
+
+#### 2. CSS 파싱
+- CSS 파일은 CSSOM(CSS Object Model)트리로 변환된다.
+<br />
+
+#### 3. Render Tree 생성
+- DOM과 CSSOM을 결합하여 Render Tree 생성
+- display: none 과 같이 표시되지 않는 요소는 제외된다.
+<br />
+
+#### 4. Layout(Reflow)
+- Render Tree를 기반으로 각 요소의 정확한 위치와 크기를 계산한다.
+- 화면 크기, 뷰포트, 글자 크기 등 다양한 요소를 고려한다.
+<br />
+
+#### 5. Paint(페인트)
+- Layout 단계에서 결정된 위치 및 스타일 정보를 이용해 픽셀 단위로 화면에 그린다.
+<br />
+
+#### 6. Composite(합성)
+- Paint 단계에서 생성된 여러 레이어(Layer)를 GPU를 통해 합성한다.
+- 레이어: 스크롤, 애니메이션과 같은 복잡한 장면을 부드럽게 처리하기 위해 사용된다.
+<br />
+
+작성중인 포스트입니다...💻
