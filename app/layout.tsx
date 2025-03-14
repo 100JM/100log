@@ -45,7 +45,8 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://100-log.vercel.app/',
-  }
+  },
+  robots: 'index, follow',
 };
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
