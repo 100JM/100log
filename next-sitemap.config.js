@@ -55,8 +55,8 @@ function getTagGroup() {
 
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-    siteUrl: "https://100-log.vercel.app/", // 배포된 사이트의 기본 URL
-    generateRobotsTxt: false,               // robots.txt 자동 생성 여부
+    siteUrl: "https://100-log.vercel.app", // 배포된 사이트의 기본 URL
+    generateRobotsTxt: true,               // robots.txt 자동 생성 여부
     changefreq: 'daily',
     priority: 1.0,
     sitemapSize: 5000,                      // 한 파일에 포함할 최대 URL 수
@@ -71,7 +71,7 @@ const config = {
             return (
                 routes.push({
                     loc: `/posts/${post.slug}`,
-                    lastmod: post.date,
+                    lastmod: new Date(post.date).toISOString(),
                     changefreq: 'weekly',
                     priority: 0.8,
                 })
@@ -81,7 +81,7 @@ const config = {
         tags.map((tag) => {
             return (
                 routes.push({
-                    loc: `/tags/${tag}`,
+                    loc: `/tags/${encodeURIComponent(tag)}`,
                     lastmod: new Date().toISOString(),
                     changefreq: 'weekly',
                     priority: 0.5,
