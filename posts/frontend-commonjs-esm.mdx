@@ -1,0 +1,74 @@
+---
+title: 'CommonJS vs ES Module'
+date: '2025-03-31'
+tags: ['Front-end']
+thumbnail: '/images/frontend-challenge.jpg'
+description: '프론트엔드 챌린지 - CommonJS 와 ES Module의 차이점'
+---
+
+<img src="/images/frontend-challenge.jpg" alt="main-img" className="rounded-xl" />
+<br />
+
+## CommonJS vs ES Module
+
+**CommonJS**와 **ES Module(ESM)** 은 자바스크립트에서 모듈을 관리하고 불러오는 두 가지 주요 방식이다.<br />
+둘의 차이점에 대해 살펴보자.
+<br />
+
+### CommonJS
+
+CommonJS는 주로 Node.js 환경에서 사용되며, 모듈을 동기적으로 불러온다.<br />
+즉 모듈이 로드될 때까지 다음 코드가 실행되지 않는 방식이며 **require** 키워드를 사용해 가져오고 **module.export**를 통해 내보낸다.<br />
+이 방식은 주로 서버측에서 사용됐지만 클라이언트 환경에서도 번들러를 통해 사용할 수 있다.
+```javascript
+// 내보내기
+const foo = () => { console.log("foo"); };
+module.exports = foo;
+
+// 가져오기
+const foo = require('./foo');
+foo(); // "foo"
+```
+- 주로 Node.js 환경에서 사용됨
+- 파일 단위로 모듈 정의
+- 런타임에 모듈을 로드(동기적 방식, 서버 환경에 적합)
+- .cjs 확장자를 쓰기도 함(ESM과 혼용 시)
+<br />
+
+### ES Module(ESM)
+
+**ES Module**은 자바스크립트의 공식 표준 모듈 시스템으로 ECMAScript 2015(ES6)부터 도입되었다.<br/ >
+ESM은 브라우저와 Node.js 환경에서 모두 사용할 수 있으며, 모듈을 비동기적으로 로드한다.<br />
+모듈을 가져올 때는 **import** 키워드를 사용하고 내보낼 때는 **export**를 사용한다. 또한 ESM은 정적 분석이 가능해 트리 쉐이킹과 같은 최적화 작업에도 유리하다.
+```javascript
+// 내보내기
+export const foo = () => { console.log("foo"); };
+
+// 가져오기
+import { foo } from './foo.js';
+foo(); // "foo"
+```
+- 브라우저와 Node.js 모두에서 사용 가능 (ES6+ 이후 지원)
+- 비동기적 방식
+- .mjs 확장자를 쓰거나 package.json에 "type": "module" 설정 필요
+<br />
+
+### 차이점 요약
+| 항목 | CommonJS | ES Module |
+|--|--|--|
+| 문법 | require, module.export | import, export |
+| 로딩 방식 | 동기 | 비동기 |
+| 실행 시점 | 런타임 | 컴파일 / 정적 분석 |
+| 브라우저 지원 | ❌ (바벨 등 트렌스파일 필요) | ⭕ (단, .mjs 또는 type: "module" 필요) |
+| 파일 확장자 | .js, .cjs | .js, .mjs |
+| TypeScript 등 호환성 | 지원됨, 이미 방대한 코드베이읏 존재 | 점차적으로 지원 확장됨, 점점 더 많은 도구, 라이브러리, 프레임워크가 ESM 중심으로 전환 중 |
+<br />
+
+### 사용 상황
+| 상황 | 추천 |
+|--|--|
+| 기존 Node.js 프로젝트 유지 | CommonJS |
+| 브라우저용 모듈 개발 | ES Module |
+| 신규 Node.js 프로젝트 시작 | ES Module(추천) |
+| 트리 쉐이킹 / 최적화 필요 | ES Module |
+| 빠른 테스트 / 실행 | CommonJS(속도가 빠르고 설정이 간단) |
