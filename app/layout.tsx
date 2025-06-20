@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Do_Hyeon } from "next/font/google"
 import 'remixicon/fonts/remixicon.css';
+import Script from 'next/script';
 
 import Header from "./components/Header";
 
@@ -50,9 +51,30 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+  const GA_MEASUREMENT_ID = process.env.NEXT_GOOGLE_ANALYTICS;
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={dohyeon.className}>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

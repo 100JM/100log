@@ -21,7 +21,7 @@ const WorkExperience = () => {
                         데이터 연계 모듈 및 관리자 시스템 개발을 통해 외부 데이터와의 실시간 연동 기능 구축 및 관리 효율 향상.<br />
                         데이터 연 성공 및 오류 현황을 Chart.js 기반으로 시각화하여 비기술 담당자의 이해도 제고.<br />
                     </p>
-                    <p className="ml-2 mb-4">사용 기술 : Next.js, Zustand, TypeScript, Tailwind CSS, Chart.js, zod, React Query</p>
+                    <p className="ml-2 mb-4">사용 기술 : Next.js, Zustand, TypeScript, Tailwind CSS, Chart.js, zod, Tanstack query</p>
                 </div>
                 <div className="text-sm">
                     <p className="font-semibold leading-6">충남 공간정보플랫폼</p>

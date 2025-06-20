@@ -3,11 +3,50 @@ import WorkExperience from "../components/about/WorkExperience";
 import ProjectList from "../components/about/ProjectList";
 import ItemDiv from "../components/about/ItemDiv";
 import ProjectInfo from "../components/about/ProjectInfo";
+import Script from 'next/script';
 
 export default function AboutPage() {
+    // About 페이지 구조화된 데이터
+    const personStructuredData = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "백종민",
+        "jobTitle": "프론트엔드 웹 개발자",
+        "description": "최신 트렌드에 대해 빠르게 이해하고 적응할 수 있습니다. Javascript 테크닉에 관심을 갖고 공부하고 있습니다.",
+        "url": "https://100-log.vercel.app",
+        "image": "https://100-log.vercel.app/images/bjm_profile.jpg",
+        "sameAs": [
+            "https://github.com/100JM",
+        ],
+        "knowsAbout": [
+            "Javascript",
+            "Typescript", 
+            "Next.js",
+            "React.js",
+            "jQuery",
+            "SQL(PostgreSQL, MySQL)"
+        ],
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "원광대학교",
+            "description": "경영학 학사"
+        },
+        "worksFor": {
+            "@type": "Organization",
+            "name": "100LOG"
+        }
+    };
 
     return (
-        <main className="max-w-[670px] px-6 m-auto flex justify-center items-center flex-col break-keep break-words post-contents md:px-0 animate-fadeIn">
+        <>
+            <Script
+                id="person-structured-data"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(personStructuredData),
+                }}
+            />
+            <main className="max-w-[670px] px-6 m-auto flex justify-center items-center flex-col break-keep break-words post-contents md:px-0 animate-fadeIn">
                 <Profile />
                 <ItemDiv
                     title='About'
@@ -42,5 +81,6 @@ export default function AboutPage() {
                 <ProjectList />
                 <ProjectInfo />
             </main>
+        </>
     );
 }
