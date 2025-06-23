@@ -7,11 +7,12 @@ import { useTheme } from "next-themes"
 import { Skeleton } from "@/components/ui/skeleton"
 
 const ModeButton: React.FC = () => {
-    const { theme, setTheme } = useTheme();
+    const { setTheme, resolvedTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-
+    
     const handleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
+        // resolvedTheme을 사용하여 실제 적용된 테마를 기준으로 전환
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
     };
 
     useEffect(() => {
@@ -26,8 +27,9 @@ const ModeButton: React.FC = () => {
         <button
             onClick={handleTheme}
             className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+            aria-label={`Switch to ${resolvedTheme === 'dark' ? 'light' : 'dark'} mode`}
         >
-            {theme === 'dark' ? <Sun /> : <Moon />}
+            {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
         </button>
     );
 };

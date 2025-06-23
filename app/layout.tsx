@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
-import { Do_Hyeon } from "next/font/google"
+import { Noto_Sans_KR } from "next/font/google"
 import 'remixicon/fonts/remixicon.css';
 import Script from 'next/script';
 
 import Header from "./components/Header";
 
-const dohyeon = Do_Hyeon({
+const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
   weight: "400"
 });
@@ -55,7 +55,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
 
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={dohyeon.className}>
+      <body className={notoSansKR.className}>
         {GA_MEASUREMENT_ID && (
           <>
             <Script
