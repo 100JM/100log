@@ -27,7 +27,7 @@ const RelatedPost: React.FC<RelatedPostInterface> = ({ relatedPosts, isRelated }
                         return (
                             <Link href={`/posts/${post.slug}`} key={post.slug} className="h-[450px] group">
                                 <div className="h-[70%] relative">
-                                    <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" />
+                                    <Image alt="post_img" src={post.thumbnail} fill className="rounded-2xl" sizes="(max-width: 960px) 100vw, 100vw" priority />
                                     <PostDescription tags={post.tags} description={post.description} />
                                 </div>
                                 <div className="line-clamp-1 flex items-center mt-3">

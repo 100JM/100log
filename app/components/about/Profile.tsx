@@ -35,7 +35,7 @@ const Profile = () => {
                 </div>
             </div>
             <div>
-                <Image src={bjmProfile} alt="bjm_profile" width={150} height={150} className="rounded-lg" />
+                <Image src={bjmProfile} alt="bjm_profile" width={150} height={170} className="rounded-lg" style={{ width: 150, height: 170 }} priority />
             </div>
         </div>
     )

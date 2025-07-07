@@ -19,7 +19,7 @@ const HighlightPost: React.FC = async () => {
                     </div>
                     <div className="h-[520px] rounded-xl w-full sm:h-[600px]">
                         <div className="w-full h-[75%] relative sm:h-[80%]">
-                            <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} className="rounded-[18px]" />
+                            <Image alt="post_img" src={latestPost.thumbnail} priority fill={true} className="rounded-[18px]" sizes="(max-width: 962px) 100vw, 100vw" />
                             <PostDescription tags={latestPost.tags} description={latestPost.description} />
                         </div>
                         <div className="line-clamp-1 flex items-center mt-3">

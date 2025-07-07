@@ -7,7 +7,7 @@ const Contact: React.FC = () => {
     return (
         <div className="my-14 w-full">
             <div className="flex flex-col justify-center items-center mb-2">
-                <Image src={profileImg} alt="profile_img" width={100} height={100} priority className="rounded-full" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+                <Image src={profileImg} alt="profile_img" width={100} height={100} className="rounded-full" style={{ width: "100px", height: "100px", objectFit: "cover" }} />
                 <span className="owner-name text-sm text-center pt-5">백종민<br /><i className="ri-calendar-2-line"></i>1993<br /><i className="ri-map-pin-line"></i>Seoul<br />커리어 발전을 위한 새로운 기회를 찾고있습니다.</span>
             </div>
             <div className="flex justify-center items-center">
