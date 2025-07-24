@@ -1,0 +1,307 @@
+---
+title: 'NPM에 직접 만든 라이브러리를 배포해보자.(TypeScript, CJS & ESM)'
+date: '2025-07-23'
+tags: ['npm']
+thumbnail: '/images/npm.jpg'
+description: '내가 만든 간단한 이미지 리사이징 라이브러리, npm에 투하!'
+---
+
+<img src="/images/npm.jpg" alt="main-img" className="rounded-xl" />
+<br />
+
+개인 공부를 하다가 문득 해보고 싶은 게 생겼다.<br />
+**NPM에 내가 만든 라이브러리 배포하기.**<br />
+예전에 React를 공부하며 만든 개인 프로젝트에서 파이어 베이스 무료 버킷을 알뜰하게 사용하기 위해 업로드 한 이미지의 크기를 리사이징하고 저장하는 방식으로 작업했었는데, 
+그때 사용했던 이미지 리사이징 함수를 라이브러리로 다듬어서 배포해 보면 어떨까. 라는 생각이 들었다.<br />
+물론 내가 배포한 라이브러리를 아무도 사용하지 않을 수도 있고, 딱히 쓸모 있는 라이브러리가 아닐 수도 있지만, 이번 기회에 모듈 방식과 빌드에 대해 배우고 언젠가 정말 괜찮은 컴포넌트나 함수를 만들었다고 생각이 들 때 
+쉽게 배포하기 위해서 진행했다.<br />
+그리고 사람 일은 어떻게 될지 모르는 거잖아?
+
+## NPM에 라이브러리 배포
+
+### 환경 셋팅
+
+**npm init** 으로 초기 셋팅을 한다. 이때 **package.json**이 생성되는데 패키지 이름, 버전, 설명, 키워드 등 기본 정보를 작성한다.<br />
+<span className="semi-info">* 나는 typescript로 작업할 예정이라 추가로 typescript도 설치했다.</span>
+
+```bash
+npm init
+```
+
+```js
+// package.json
+{
+    "name": "@100jm/image-resizer",
+    "publishConfig": {
+        "access": "public"
+    },
+    "version": "1.0.6",
+    "description": "resize image function",
+    "main": "dist/cjs/index.js",
+    "module": "dist/mjs/index.js",
+    "types": "dist/mjs/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/mjs/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+}
+```
+
+스코프 패키지로 배포하고 싶었고 스코프 패키지는 기본적으로 private(유료)이므로 publishConfig를 public으로 설정하였다. **main과 module 경로는 각 CJS와 ESM 환경에서의 진입점**이며 해당 내용은 아래에 정리하겠다.
+<br />
+
+### 모듈 방식
+<br />
+
+#### CJS와 ESM
+
+일전에 **CJS(commonJS)** 와 **ESM(ES Module)** 에 대해 포스팅 한적이 있다.
+
+<a href="https://100-log.vercel.app/posts/frontend-commonjs-esm"  target="_blank" rel="noopener noreferrer">
+   <span style={{color: "gray"}}>🔗CommonJS vs ES Module - 백종민의 개발 블로그</span>
+</a>
+
+간단하게 요약하자면
+
+- CJS(commonJS)<br />
+문법: require(가져오기) / module.export(내보내기)<br />
+브라우저 지원: X, Babel + Webpack/Vite 등 번들러 필요<br />
+실행 시점: 런타임<br />
+확장자: js, cjs<br />
+동기 방식, Node.js 환경에 적합
+<br />
+- ESM(ES Module)<br />
+문법: import(가져오기) / export(내보내기)<br />
+브라우저 지원 : O, 브라우저와 Node.js 환경에서 모두 사용 가능<br />
+실행 시점: 컴파일<br />
+확장자: js, mjs<br />
+비동기 방식, 트리 쉐이킹
+<br />
+
+#### 두 모듈을 전부 지원해야하는 이유
+
+두 모듈 시스템은 기본적으로 동작이 달라서 호환되기가 어렵다. 그럼에도 전부 지원하면 좋은 이유는 뭘까
+
+1. **SSR 적극 사용 시 Node.js의 CJS 지원 중요**
+2. **높은 호환성 보장과 사용자 편의성 향상**<br />
+Node.js 환경<br />
+-레거시: CommonJS만 지원<br />
+-최신: ES Modules 지원 (하지만 일부 라이브러리는 여전히 CJS)<br />
+브라우저 환경<br />
+-모던 브라우저: ES Modules 지원<br />
+-레거시 브라우저: CommonJS (번들러가 변환)
+3. **성능 최적화(트리 쉐이킹)**<br />
+브라우저 환경에서는 페이지 렌더링을 빠르게 하는 것이 중요한데 이 때 JavaScript는 로딩되어 실행되는 동안 페이지 렌더링을 중단시킨다.<br />
+따라서 JavaScript 번들의 사이즈를 줄여서 렌더링이 중단되는 시간을 최소화 하는 것이 중요한데 이를 위해 필요한 것이 **트리 쉐이킹(Tree-Shaking)** 이다.<br />
+**CJS는 런타임에 모듈 로딩을 결정**하여 조건부 로딩과 동적 경로를 지원하지만, 그로인해 빌드 타임에 정적 분석을 적용하기가 어렵다. 하지만 **ESM은 정적인 구조로 모듈끼리 의존하도록 강제**한다. **컴파일 타임에 모듈 로딩을 결정**하여 빌드 단계에서 정적 분석을 통해 모듈 간의 의존 관계를 파악할 수 있고, 트리 쉐이킹을 쉽게 할 수 있다.
+
+이런 장점 때문에 두 모듈을 모두 지원하는 라이브러리를 배포하게 되었다.
+<br />
+
+#### 빌드 구성
+
+위와 같은 이유로 이중 컴파일 구조를 구성했다.<br />
+CJS에 맞게 한번, ESM에 맞게 한번, 총 두번의 컴파일을 해야하므로 **tsconfig-base.json** 파일에 상속받아 사용할 공통 설정을 담고 **tsconfig-cjs.json**와 **tsconfig.json**에 각 모듈 방식 별 설정을 작성하였다.
+
+```js
+// tsconfig-base.json
+{
+    "compilerOptions": {
+        // JavaScript 버전을 ES6로 설정 (ES2015)
+        // 화살표 함수, 클래스, 모듈 등 ES6 기능 사용 가능
+        "target": "ES6",
+        
+        // JavaScript 파일(.js)도 TypeScript와 함께 컴파일 허용
+        // 기존 JS 코드를 점진적으로 TS로 마이그레이션할 때 유용
+        "allowJs": true,
+        
+        // default export가 없는 모듈을 default import로 가져올 수 있게 함
+        // import React from 'react' 같은 구문 허용
+        "allowSyntheticDefaultImports": true,
+        
+        // 모듈 해석의 기준 디렉토리를 src로 설정
+        // import { resizer } from './utils/resizer' 같은 상대 경로 해석 기준
+        "baseUrl": "src",
+        
+        // .d.ts 타입 정의 파일 생성
+        // 라이브러리 사용자가 TypeScript 타입 힌트를 받을 수 있음
+        "declaration": true,
+        
+        // CommonJS 모듈을 ES Modules처럼 import할 수 있게 함
+        // import * as React from 'react' 대신 import React from 'react' 사용 가능
+        "esModuleInterop": true,
+        
+        // 소스맵을 별도 파일로 생성 (인라인 아님)
+        // 디버깅 시 원본 TS 파일로 추적 가능
+        "inlineSourceMap": false,
+        
+        // 컴파일 시 생성된 파일 목록을 콘솔에 출력하지 않음
+        "listEmittedFiles": false,
+        
+        // 컴파일 시 처리된 파일 목록을 콘솔에 출력하지 않음
+        "listFiles": false,
+        
+        // 모듈 해석 방식을 Node.js 방식으로 설정
+        // node_modules에서 패키지 찾기, index.js 자동 해석 등
+        "moduleResolution": "node",
+        
+        // switch문에서 break나 return이 없는 case에 대해 에러 발생
+        // 실수로 fallthrough되는 것을 방지
+        "noFallthroughCasesInSwitch": true,
+        
+        // 컴파일 에러 메시지를 보기 좋게 포맷팅
+        "pretty": true,
+        
+        // JSON 파일을 모듈로 import할 수 있게 함
+        // import config from './config.json' 같은 구문 허용
+        "resolveJsonModule": true,
+        
+        // TypeScript 소스 파일의 루트 디렉토리
+        // 출력 파일의 디렉토리 구조를 결정하는 기준
+        "rootDir": "src",
+        
+        // 라이브러리 타입 체크를 건너뛰어 컴파일 속도 향상
+        // node_modules의 타입 정의 파일 검사 생략
+        "skipLibCheck": true,
+        
+        // 엄격한 타입 체크 활성화
+        // null 체크, any 타입 사용 제한 등
+        "strict": true,
+        
+        // 모듈 해석 과정을 콘솔에 출력하지 않음
+        "traceResolution": false,
+        
+        // JSX 문법 지원 (React 개발 시 필요)
+        // .tsx 파일에서 JSX 사용 가능
+        "jsx": "react"
+    },
+    
+    // 파일 저장 시 자동 컴파일 비활성화
+    // 빌드 스크립트로만 컴파일하도록 제어
+    "compileOnSave": false,
+    
+    // 컴파일에서 제외할 파일/폴더 목록
+    "exclude": [
+        "node_modules",        // 의존성 패키지들
+        "dist",               // 빌드 출력 폴더
+        "tests",              // 테스트 폴더
+        "**/*.test.ts",       // 테스트 파일들
+        "**/*.test.js",       // 테스트 파일들
+        "test.html",          // 테스트용 HTML 파일
+        "jest.config.js"      // Jest 설정 파일
+    ],
+    
+    // 컴파일에 포함할 파일/폴더 목록
+    "include": [
+        "src"                 // 소스 코드 폴더만 포함
+    ]
+}
+```
+
+```js
+// tsconfig.json
+{
+  "extends": "./tsconfig-base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "moduleDetection": "force",
+  }
+}
+```
+
+```js
+// tsconfig-cjs.json
+{
+    "extends": "./tsconfig-base.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "dist/cjs",
+        "target": "es6"
+    }
+}
+```
+
+그 다음 package.json에서 build 코드를 작성해 주었다.<br />
+주의할 점으로 리눅스나 맥의 rm 명령어는 Window 터미널에서는 읽지 못한다. 그래서 난 Windows에서도 rm -rf 명령어처럼 작동하는 패키지인 **rimraf** 를 설치하였다.
+```js
+// package.json
+"scripts": {
+    "test": "jest",
+    "build": "rimraf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && node -e \"require('fs').writeFileSync('dist/mjs/package.json', JSON.stringify({type: 'module'})); require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({type: 'commonjs'}));\"",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
+  },
+```
+<span className="text-info-block">`"build": "rimraf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && node -e \"require('fs').writeFileSync('dist/mjs/package.json', JSON.stringify({type: 'module'})); require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({type: 'commonjs'}));\""`</span>
+
+이 길고 복잡해 보이는 빌드 코드를 단계 별로 살펴 보자
+
+1. **`rimraf dist`**
+    - -기존 dist 폴더를 완전히 삭제
+    - -깨끗한 빌드를 위해 이전 빌드 결과물 제거
+2. **`tsc -p tsconfig.json`** 
+    - -ES Module용 TypeScript 컴파일
+    - -tsconfig.json를 읽어서 src/ 폴더의 TypeScript 파일 스캔, dist/mjs/ 폴더에 ES Module 형태로 컴파일
+3. **`tsc -p tsconfig-cjs.json`**
+    - -CommonJS용 TypeScript 컴파일
+    - -tsconfig-cjs.json를 읽어서 src/ 폴더의 TypeScript 파일 스캔, dist/cjs/ 폴더에 commonJS 형태로 컴파일
+4. **`node -e \"require('fs').writeFileSync('dist/mjs/package.json', JSON.stringify({type: 'module'})); require('fs').writeFileSync('dist/cjs/package.json', JSON.stringify({type: 'commonjs'}));\"`**
+    - -dist/mjs/package.json & dist/cjs/package.json 파일 생성
+    - -각 내용: `{"type": "module"}` & `{"type": "commonjs"}`
+    - -ES Module & CommonJS 폴더임을 명시
+    - <p className="semi-info">*왜 package.json 파일을 생성하는가?<br />모듈 시스템을 명시하여 `{"type": "module"}` → .js 파일을 ES Modules로 해석, `{"type": "commonjs"}` → .js 파일을 CommonJS로 해석</p>
+<br />
+
+#### 배포
+
+배포 시 빌드 결과물인 dist 폴더를 제외한 필요 없는 파일이 올라가지 않도록 package.json에 **`"files": ["dist"]`** 항목을 추가했지만 혹시 모르니 이중으로 .npmignore 파일 또한 작성했다.
+
+```ignore
+**/*
+!/dist/**
+```
+
+NPM에 가입 후 터미널에서 로그인을 해주고 배포하면 끝.
+```bash
+npm login
+
+npm publish
+```
+
+**배포 관련 명령어**
+```bash
+// 패키지 이름 검색
+npm search "패키지 명"
+
+// 배포 테스트
+npm pack
+
+// 배포후 버전 관리
+npm version patch -m "버그 수정"
+npm version minor -m "새 기능 추가"
+npm version major -m "주요 변경사항"
+```
+<br />
+
+### 후기
+
+이번 라이브러리 배포는 정말 즉흥적으로 진행하게 됐는데 덕분에 모듈 시스템에 대해 전보다 더 깊게 알게되었다.<br />
+또 로직을 작성하며 어떻게 하는게 좀 더 효율적이고 불필요한 리소스가 없을지 고민하게 되었고 *그저 문제 없이 작동하는 코드*가 아닌 핵심적이면서도 가벼운 **잘 작성한 코드**를 만들도록 노력하자! 라는 생각이 크게 들었다.<br />
+막상 배포하고보니 이걸 누가 써보기나 할까~ 싶었는데 이게 왠걸
+<p className="flex justify-center">
+    <img src="/images/100jm-image-resizer.png" alt="100jm-image-resizer" />
+</p>
+해당 포스트 작성일 기준 500명이 넘는 사람들이 다운받았다.<br />
+사실 초기 배포 버전에 타입 관련 에러가 있어서 제대로 작동하는 버전은 가장 최근 배포한 버전이라, 실직적인 다운로드 횟수는 70회지만 이마저도 나에겐 엄청 큰 숫자다.<br />
+이번 라이브러리를 만들며 테스트 도구인 **jest**를 처음 사용해봤는데, 앞으로 배포 후 기능에 문제가 생길만한 크리티컬한 에러가 없도록 더 꼼꼼히 테스트를 진행해야겠다.🥲<br />
+뭔가 뿌듯하고 감격스러우면서도 내 허접한 코드.. 라는 생각도 들어서 부끄러웠지만 뿌듯함과 만족감이 훨씬 더 커서 앞으로 틈날 때마다 개선하고 생각 중인 추가 기능들을 업데이트할 예정이다.<br />

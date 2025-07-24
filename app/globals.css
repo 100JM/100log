@@ -90,6 +90,14 @@ body {
   border-radius: 0.5rem;
 }
 
+.text-info-block {
+  color: #3182ce;
+  padding: 12px;
+  background-color: #e5f5fd;
+  border-radius: 0.5rem;
+  display: block;
+}
+
 .text-info-link {
   font-weight: bold;
   color: black;
