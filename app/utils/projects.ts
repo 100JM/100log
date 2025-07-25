@@ -36,6 +36,43 @@ export const projects = [
     },
     {
         id: 'P002',
+        title: '@100jm/image-resizer',
+        owner: 'NPM 라이브러리',
+        description: '심플한 이미지 리사이징 라이브러리',
+        skill: ['JavaScript', 'TypeScript', 'canvas', 'Node.js'],
+        link: 'https://www.npmjs.com/package/@100jm/image-resizer',
+        github: 'https://github.com/100JM/image-resizer',
+        titleImg: '/project_images/img_resizer_title.png',
+        contents: [
+            {
+                subject: '개요',
+                content: [
+                    '심플한 이미지 리사이징 라이브러리',
+                    'TypeScript 지원',
+                    'CJS & ESM 모듈 모두 지원',
+                    '브라우저 & Node.js 환경 자동 감지, 모두 지원',
+                    '가벼운 의존성',
+                ]
+            },
+            {
+                subject: 'Stack',
+                content: ['JavaScript', 'TypeScript', 'canvas', 'Node.js']
+            },
+            {
+                subject: '기능',
+                content: [
+                    '업로드 한 이미지(File | Buffer) 크기 리사이징',
+                    'max width, max height, 퀄리티, 이미지 스무딩 옵션',
+                    'blob 타입으로 반환',
+                    'image-/project_images/img_resizer_1.png',
+                    'image-/project_images/img_resizer_2.png',
+                    // ['image-/project_images/img_resizer_1.png', 'image-/project_images/img_resizer_2.png',],
+                ]
+            },
+        ]
+    },
+    {
+        id: 'P003',
         title: 'TO-DO CALENDAR: 일정 관리 캘린더',
         owner: '개인 프로젝트',
         description: '개인 일정 관리 캘린더 웹 애플리케이션',
