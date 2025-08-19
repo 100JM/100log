@@ -52,9 +52,9 @@ import { z } from "zod";
 
 // 스키마 정의
 const UserSchema = z.object({
-  id: z.number(),
-  name: z.string().min(2),
-  email: z.string().email(),
+    id: z.number(),
+    name: z.string().min(2),
+    email: z.string().email(),
 });
 
 // 타입 자동 생성
@@ -62,14 +62,14 @@ type User = z.infer<typeof UserSchema>;
 
 // 런타임 검증
 const result = UserSchema.safeParse({
-  id: 1,
-  name: "홍길동",
-  email: "test@gmail.com",
+    id: 1,
+    name: "홍길동",
+    email: "test@gmail.com",
 });
 
 if (!result.success) {
-  console.error(result.error);
+    console.error(result.error);
 } else {
-  const user: User = result.data;
+    const user: User = result.data;
 }
 ```
