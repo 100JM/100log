@@ -52,12 +52,41 @@ body {
   margin-right: 12px;
 }
 
+.post-top-nav,
 .owner-name,
 .post-nav,
 .post-contents {
   font-family: "Nanum Gothic", monospace;
   font-weight: 400;
   font-style: normal;
+}
+
+.post-top-nav {
+  background-color: hsl(var(--muted));
+}
+
+.post-top-nav>h2:hover,
+.post-top-nav>h3:hover,
+.post-top-nav>h4:hover {
+  text-decoration: underline;
+}
+
+.post-top-nav>h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.post-top-nav>h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0 0 10px;
+}
+
+.post-top-nav>h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 8px 0 0 20px;
 }
 
 .post-nav {

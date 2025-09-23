@@ -3,6 +3,7 @@ import PostHeaderNav from '@/app/components/PostHeaderNav';
 import Tags from '@/app/components/Tags';
 import RelatedPost from '@/app/components/RelatedPost';
 import NextPrevPost from '@/app/components/NextPrevPost';
+import PostTopNav from '@/app/components/PostTopNav';
 import Script from 'next/script';
 
 import { metadata } from '@/app/layout';
@@ -115,6 +116,7 @@ const PostPage = async ({ params }: { params: { slug: string }; }) => {
                                 <div className="flex flex-wrap text-lg mb-8 justify-start items-end">
                                     <Tags tags={post.tags} date={post.date} />
                                 </div>
+                                <PostTopNav headers={post.headers} />
                                 <div className="post-contents">
                                     <MDXRemote source={post.content} options={{
                                         mdxOptions: {
