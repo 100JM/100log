@@ -1,0 +1,182 @@
+---
+title: 'JWT(Json web token)란?'
+date: '2025-10-01'
+tags: ['Front-end']
+thumbnail: '/images/jwt-json-web-token.png'
+description: 'JWT - JSON 객체 형태의 데이터를 안전하게 주고받기 위한 토큰 기반 인증 방식'
+---
+
+<img src="/images/jwt-json-web-token.png" alt="main-img" className="rounded-xl" />
+<br />
+
+## JWT
+
+### JWT란?
+JWT(Json web token)는 **JSON 객체 형태의 데이터를 안전하게 주고받기 위한 토큰 기반 인증 방식**이다.<br />
+주로 사용자 **인증(Authentication)** 과 **정보 교환**에 사용되며 **자체적으로 정보를 포함**하기 때문에 서버가 별도로 세션을 저장하지 않고도 클라이언트를 인증할 수 있다.
+<br />
+
+### JWT의 구조
+JWT는 **헤더(header)**, **내용(payload)**, **서명(signature)** 세 부분으로 나뉘어 있다.
+```bash
+aaaaaa.bbbbbb.cccccc
+(헤더) (내용) (서명)
+```
+
+#### 1. Header
+- 토큰의 타입(JWT)과 서명에 사용할 알고리즘을 명시
+```js
+{
+    "typ": "JWT",
+    "alg": "HS256"
+}
+```
+<br />
+
+#### 2. Payload
+- 실제 전달하려는 데이터가 들어있다.
+- 데이터의 한 조각을 클레임(claim)이라 부르고 이는 JSON(key/value) 형태의 한 쌍으로 이뤄져있다.
+- 토큰에는 여러개의 클레임을 넣을 수 있다.
+- 클레임은 크게 세 가지로 분류된다.
+1. 등록된 클레임(Registered Claims)
+    - JWT 표준에서 **미리 정의된 예약 클레임**으로 특정 목적에 맞게 사용하도록 권장된다.
+    - **iss** - 토큰 발급자(Issuer)
+    - **sub** - 토큰 주제(Subject) → 토큰의 주 대상(보통 사용자 ID)
+    - **aud** - 토큰 대상자(Audience) → 토큰이 사용될 수신자
+    - **exp** - 만료 시간(Expiration) → NumericDate 형식(예: 1672531199)
+    - **nbf** - Not Before(이 시간 전에는 토큰이 유효하지 않음, NumericDate 형식)
+    - **iat** - 토큰 발급 시간(Issued At)
+    - **jti** - JWT ID → 토큰을 구분하기 위한 고유 식별자
+    ```js
+    {
+    "iss": "my-auth-server",
+    "sub": "user123",
+    "aud": "my-api",
+    "exp": 1672531199,
+    "iat": 1672527599,
+    "jti": "abc123def456"
+    }
+    ```
+
+2. 공개 클레임(Public Claims)
+    - 사용자가 자유롭게 정의할 수 있지만, **충돌 방지를 위해 URL 형식의 이름**을 쓰는게 권장된다.
+    ```js
+    {
+        "https://100-log.vercel.app/posts/frontend-jwt/is_good" : true
+    }
+    ```
+3. 비공개 클레임(Private Claims)
+    - 서버와 클라이언트(또는 특정 서비스 간)에서 **자체 정의해서 쓰는 클레임**
+    - 다른 서비스와 충돌 가능성이 있으므로 내부 용도로만 사용한다.
+    ```js
+    {
+        "company": "100log",
+        "team": "frontend",
+        "permissions": ["read", "write"]
+    }
+    ```
+<br />
+
+#### 3. Signature
+- 헤더 + 페이로드를 비밀 키로 서명한 값
+- 무결성을 보장(데이터 위·변조 방지)
+- 동작원리
+    ```js
+    1.서명 생성
+      토큰 발급 시 서버는 다음을 만든다.
+      Signature = Sign( 
+        base64UrlEncode(Header) + "." + base64UrlEncode(Payload), 
+        secretKey 또는 privateKey 
+      )
+
+    2.클라이언트 요청 시
+      클라이언트는 발급받은 JWT를 `Authorization: Bearer <token>` 으로 서버에 보낸다.
+    
+    3.서버 검증 과정
+      클라이언트가 보낸 Header, Payload 를 가져와서 다음을 새로 만든다.
+      base64UrlEncode(Header) + "." + base64UrlEncode(Payload)
+
+      서버에 있는 secretKey(또는 publicKey)를 사용해서 같은 알고리즘으로 서명을 새로 계산.
+      새로 계산한 Signature와 클라이언트가 보낸 Signature(JWT의 마지막 부분)가 일치하는지 확인 후 인증 허용.
+    ```
+<br />
+
+### JWT 동작 과정
+1. 로그인 요청: 사용자가 아이디 / 비밀번호로 로그인
+2. 서버 인증: 서버에서 정보 확인 후 JWT 발급
+3. 클라이언트 저장: JWT를 로컬스토리지, 세션스토리지, 쿠키 등에 저장
+4. 요청 시 전송: 이후 API 요청 시 HTTP Header에 JWT 포함
+5. 서버 검증: 서버는 JWT의 서명을 검증하여 사용자가 유효한지 확인
+6. 인증 완료: 유효하면 요청 처리, 아니라면 에러 반환
+<br />
+
+### JWT의 장단점
+
+#### 장점
+- Stateless: 서버에 세션을 저장하지 않아 확정성에 유리
+- 범용성: 어떤 언어나 환경에서도 사용 가능
+- 안전성: 서명을 통해 데이터 위변조 방지 가능
+<br />
+
+#### 단점
+- 토큰 길이: 페이로드에 많은 데이터를 담으면 토큰 크기가 커짐
+- 취소 어려움: 이미 발급된 JWT는 만료 전까지 무효화하기 어려움
+    - 대처로 **짧은 만료시간** + **Refresh Token** 조합 사용
+- 보안 위험: 토큰이 탈취되면 위험, 반드시 **HTTPS 사용**
+<br />
+
+### Access Token & Refresh Token
+Access Token + Refresh Token 구조는 Access Token 하나만 쓰는 것보다 보안성과 유연성이 훨씬 좋아진다.
+<br />
+
+#### Access Token
+- 짧은 유효기간을 가지는 토큰 (보통 5분 ~ 30분 정도)
+- API 요청할 때 `Authorization: Bearer <Access Token>` 으로 함께 전송
+- 서버는 토큰의 **Signature 검증**만으로 사용자를 인증할 수 있음
+- 짧게 설정하는 이유: 토큰이 탈취되더라도 피해를 최소화
+- 잦은 재발급은 Refresh Token이 보완해줌
+<br />
+
+#### Refresh Token
+- 긴 유효기간을 가지는 토큰 (보통 1주일 ~ 1개월 이상)
+- 클라이언트가 **Access Token이 만료되었을 때만** 사용
+- 보통은 DB나 Redis 같은 저장소에 Refresh Token을 **서버에서 따로 저장**해서 관리 (→ 탈취 시 무효화할 수 있도록 하기 위함)
+- 클라이언트에서는 Refresh Token을 보안성이 **높은 저장소(HttpOnly 쿠키 등)** 에 보관하는 게 권장됨
+<br />
+
+#### 동작 흐름
+1. 로그인
+    - 사용자가 로그인 요청
+    - 서버가 Access Token(짧음) + Refresh Token(김) 발급
+    - 클라이언트는 Access Token은 메모리/스토리지에, Refresh Token은 보안 쿠키 등에 저장
+<br />
+2. 요청
+    - 클라이언트가 API 요청 시 `Authorization: Bearer <Access Token>`
+    - 서버는 Access Token의 유효성(Signature, exp 만료시간 등) 검증 후 응답
+<br />
+3. Access Token 만료
+    - Access Token이 만료되면 클라이언트는 Refresh Token을 서버에 보냄
+    - 서버는 Refresh Token이 서버 DB에 있는지 확인, 유효하면 새로운 Access Token 발급, 필요하다면 Refresh Token도 갱신
+    ```bash
+    POST /auth/refresh
+    { "refreshToken": "<Refresh Token>" }
+    ```
+
+4. 로그아웃 / 강제 만료
+    - 사용자가 로그아웃하면 서버는 DB에서 해당 Refresh Token을 삭제
+    - 만약 Refresh Token이 유출되었다면 서버에서 블랙리스트 처리로 즉시 무효화 가능
+<br />
+
+#### 장단점
+- 장점:
+    - 보안 강화: Access Token 탈취 시 피해 최소화 (짧은 유효기간 덕분)
+    - 유연성: 사용자는 계속 로그인 상태 유지 가능 (Refresh Token이 있으면 새 Access Token 발급 가능)
+    - 세션리스 인증: Access Token은 여전히 Stateless하므로 서버 확장성 유지
+- 단점: 
+    - Refresh Token을 서버에 저장 & 관리해야 해서 완전히 Stateless하지 않음
+    - 구현 복잡도가 조금 올라감
+<br />
+
+#### 보관 방법
+- Access Token: 보통 **메모리**나 **localStorage/sessionStorage**(단, XSS 공격에 취약할 수 있음)
+- Refresh Token: **HttpOnly 쿠키**에 저장하는 방식 권장(JS에서 접근 불가 → XSS 방어에 유리)
