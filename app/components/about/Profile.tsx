@@ -1,4 +1,4 @@
-import bjmProfile from "../../public/images/bjm_profile.jpg";
+import bjmProfile from "../../public/images/bjm_profile_2.jpg";
 import Image from "next/image";
 
 const Profile = () => {
@@ -35,7 +35,7 @@ const Profile = () => {
                 </div>
             </div>
             <div>
-                <Image src={bjmProfile} alt="bjm_profile" width={150} height={170} className="rounded-lg" style={{ width: 150, height: 170 }} priority />
+                <Image src={bjmProfile} alt="bjm_profile" width={200} height={200} className="rounded-lg" priority />
             </div>
         </div>
     )
