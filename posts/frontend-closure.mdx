@@ -25,6 +25,9 @@ function outerFunction(outerVariable) {
 
 const newFunction = outerFunction('outside');
 newFunction('inside');
+
+// Outer Variable: outside
+// Inner Variable: inside
 ```
 여기서 innerFunction은 outerFunction의 내부에 정의되어 있다. innerFunction은 자신이 생성된 스코프, 즉 outerFunction의 스코프를 기억하고, outerFunction의 호출이 완료된 이후에도 그 스코프에 접근할 수 있다.
 그리고 이에 따라 innerFunction은 outerFunction에도 접근할 수 있다.<br />
