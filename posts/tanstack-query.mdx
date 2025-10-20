@@ -1,0 +1,192 @@
+---
+title: 'TanStack Query'
+date: '2025-10-20'
+tags: ['React', 'Javascript', 'Front-end']
+thumbnail: '/images/splash-light.png'
+description: 'TanStack Query - 강력한 비동기 상태 관리, 서버 상태 유틸리티 및 데이터 페칭'
+---
+
+<img src="/images/logo-color-banner-600.png" alt="main-img" className="rounded-xl" />
+<br />
+
+## TanStack Query
+
+### TanStack Query란?
+
+TanStack Query는 React나 Next.js에서 서버 상태(Server State)를 효율적으로 관리하기 위한 데이터 동기화 라이브러리다.<br />
+React의 useState는 **클라이언트 상태(Client state)** 를 관리할 때는 좋지만 **서버에서 가져오는 데이터**는 다르다.<br />
+
+| 구분     | 클라이언트 상태           | 서버 상태              |
+| ------- | ----------------------- | ----------------------|
+| 출처     | 로컬 (브라우저 내)       | 원격 (API, DB 등)       |
+| 저장 위치 | 메모리                | 서버                     |
+| 변경 주체 | 프론트엔드에서 직접 변경 | 백엔드 변경으로 영향       |
+| 최신 여부 | 항상 최신              | 오래되면 stale(구식)이 됨 |
+
+그래서 서버 데이터를 다루려면 단순히 useState + useEffect 로는 한계가 있고 **캐싱, refetching, 로딩/에러 상태 관리, 동기화** 같은 기능을 자동으로 해주는 TanStack Query와 같은 라이브러리가 필요하다.
+<br />
+
+### 주요 개념
+
+TanStack Query는 5가지 핵심 개념이 있다.
+<br />
+
+#### Query(데이터 읽기)
+- **useQuery** 훅으로 서버에서 데이터를 가져온다.
+- **캐싱(caching)** + **자동 리패칭(refetching)** + **상태 관리**가 내장되어 있다.
+- **queryKey(캐시 key)** 가 같으면 같은 캐시를 공유하며 **queryFn**은 데이터를 가져오는 함수다.
+
+```javascript
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+function TodoList() {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["todos"],  // 캐시 key
+    queryFn: async () => {
+      const res = await axios.get("/api/todos");
+      return res.data;
+    },
+  });
+
+  if (isLoading) return <p>로딩 중...</p>;
+  if (isError) return <p>에러 발생: {error.message}</p>;
+
+  return (
+    <ul>
+      {data.map((todo: any) => (
+        <li key={todo.id}>{todo.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+<br />
+
+#### Mutation(데이터 쓰기)
+
+- 데이터 추가/수정/삭제 시 사용하는 훅이다.
+- **useMutation**은 캐싱보다는 서버에 상태를 변경하는 작업이 중점이다.
+
+```javascript
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+
+function AddTodo() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (newTodo) => axios.post("/api/todos", newTodo),
+    onSuccess: () => {
+      // 성공 시 todos 목록을 자동으로 갱신
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
+  return (
+    <button
+      onClick={() => mutation.mutate({ title: "새 할 일" })}
+      disabled={mutation.isPending}
+    >
+      {mutation.isPending ? "추가 중..." : "추가하기"}
+    </button>
+  );
+}
+```
+<br />
+
+#### QueryClient
+- **QueryClient**는 모든 캐시와 상태를 관리하는 **중앙 관리자**이다.
+- 앱 전체에 Provider로 등록해 사용한다.
+
+```javascript
+// app/providers.tsx
+"use client";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useState } from "react";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  // QueryClient를 생성(상태로 관리해야 새로 렌더될 때 새 인스턴스가 안 생김)
+  const [client] = useState(() => new QueryClient());
+
+  return (
+    <QueryClientProvider client={client}>
+      {children}
+      // 개발 도구(캐시, 쿼리 상태 시각화 가능)
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+}
+
+
+// app/layout.tsx
+import { Providers } from "./providers";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ko">
+      <body>
+        <Providers>
+          {children} // 모든 페이지에서 React Query 사용 가능
+        </Providers>
+      </body>
+    </html>
+  );
+}
+```
+<br />
+
+#### 캐싱(Caching)과 스테일 타임(Stale Time)
+
+TanStack Query는 가져온 데이터를 **메모리에 캐싱**한다.
+- staleTime: 데이터가 **신선한 상태로 유지되는 시간(ms)**
+- cacheTime: 캐시가 **메모리에 남아 있는 시간(ms)**
+
+```javascript
+useQuery({
+  queryKey: ["todos"],
+  queryFn: fetchTodos,
+  staleTime: 1000 * 60, // 1분 동안은 refetch 안함
+  cacheTime: 1000 * 60 * 5, // 5분 후 메모리에서 삭제
+});
+```
+<br />
+
+#### Refetching (데이터 자동 갱신)
+
+다음 상황에서 자동으로 Refetching이 발생한다.
+- 윈도우 포커스 복귀 (refetchOnWindowFocus: true)
+- 네트워크 재연결 (refetchOnReconnect: true)
+- 쿼리 인스턴스 재마운트 시 (refetchOnMount: true)
+
+```javascript
+useQuery({
+  queryKey: ["todos"],
+  queryFn: fetchTodos,
+  refetchOnWindowFocus: false, // 포커스 시 재요청 비활성화
+});
+```
+<br />
+
+#### 주요 기능 요약
+
+| 기능                   | 설명                                      |
+| --------------------- | ---------------------------------------- |
+| **자동 캐싱**           | 동일한 queryKey는 캐시 공유                |
+| **자동 리패칭**         | 포커스 복귀, 네트워크 복구 시 최신화          |
+| **병렬/의존 쿼리**      | 여러 쿼리를 동시에 또는 순서대로 실행          |
+| **Optimistic Update** | 낙관적 UI 업데이트 (즉시 UI 반영 후 서버 확인) |
+| **Infinite Query**    | 무한 스크롤 구현 가능                        |
+| **Devtools 지원**      | 상태 시각화로 디버깅 편리                     |
+<br />
+
+### React useState vs TanStack Query
+| 항목       | 클라이언트 상태       | 서버 상태 (TanStack Query) |
+| -------- | -------------- | ---------------------- |
+| 관리 주체    | React useState | QueryClient            |
+| 데이터 출처   | 사용자의 입력        | API, DB 등              |
+| 동기화      | 수동             | 자동 (refetch)           |
+| 캐싱       | 없음             | 있음                     |
+| 에러/로딩 관리 | 직접 구현          | 내장됨                    |
