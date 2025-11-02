@@ -1,4 +1,4 @@
-import bjmProfile from "../../public/images/bjm_profile_2.jpg";
+import bjmProfile from "../../public/images/bjm_profile.jpg";
 import Image from "next/image";
 
 const Profile = () => {

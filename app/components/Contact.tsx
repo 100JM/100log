@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import profileImg from "../public/images/bjm_profile_3.jpg";
+import profileImg from "../public/images/bjm_profile.jpg";
 import gmailSvg from "../public/images/gmail-color.svg";
 
 const Contact: React.FC = () => {
