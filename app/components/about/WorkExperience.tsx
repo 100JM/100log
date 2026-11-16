@@ -9,6 +9,21 @@ const WorkExperience = () => {
                 </div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">공공기관 및 민간부분의 GIS 서비스 플랫폼 구축 기업</p>
                 <div className="text-sm">
+                    <p className="font-semibold leading-6">환경공단 유역하수도 통계시스템</p>
+                    <ul className="work-experience-ul text-gray-600 dark:text-gray-400">
+                        <li>하수도 통계 자료 입력·조회 및 검토·검증 화면 개발</li>
+                        <li>RealGrid 기반 통계 데이터 편집, 계산 필드 및 엑셀 내보내기 기능 구현</li>
+                        <li>자료 제출·승인·반려와 검증 오류 확인 등 통계 업무 흐름 구현</li>
+                        <li>통계 제출률, 미제출 지표, 검증 현황을 제공하는 대시보드 개발</li>
+                        <li>Zustand 기반 다중 탭 상태 관리 및 동적 화면 로딩 구현</li>
+                    </ul>
+                    <p className="my-4 ml-2 text-gray-600 dark:text-gray-400">
+                        통계 자료의 입력부터 검토·검증까지 이어지는 업무 화면을 개발.<br />
+                        다중 탭 전환 시 화면 상태를 유지하고, 대시보드 패널의 드래그 앤 드롭 배치 및 순서 저장 기능 구현.<br />
+                    </p>
+                    <p className="ml-2 mb-4">사용 기술 : Next.js, React, TypeScript, Tailwind CSS, Zustand, TanStack Query, RealGrid, Chart.js, dnd-kit</p>
+                </div>
+                <div className="text-sm">
                     <p className="font-semibold leading-6">환경공단 유역하수도 통합정보플랫폼</p>
                     <ul className="work-experience-ul text-gray-600 dark:text-gray-400">
                         <li>관제시스템 초기모델(React 기반 UI 설계 및 컴포넌트) 개발</li>
